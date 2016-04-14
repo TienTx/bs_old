@@ -76,4 +76,9 @@ public class CustomerNotMemberDAO extends CustomerDAO {
         return null;
     }
 
+    @Override
+    public boolean findCustomerMemberByUserName_Email(String username, String email) {
+        return false;
+    }
+
 }

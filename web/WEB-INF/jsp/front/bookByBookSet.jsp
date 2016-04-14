@@ -87,7 +87,7 @@
                                                     <img class="hide" src="${icon}/incart.png" alt="<spring:message code="book.isincart"/>">
                                                     <button class="odb" data-bind="${rowsBbBs.idBook}#${crMbUserName}"><spring:message code="book.order"/></button>
                                                 </c:if>
-                                                <section class="fb-like" data-href="${rowsBbBs.idBook}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>
+                                                <!--<section class="fb-like" data-href="" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>-->
                                             </section>
                                         </section>
                                     </pg:item>

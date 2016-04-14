@@ -26,16 +26,11 @@
         <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapjs" />
     </head>
     <body>
-        <section class="inside clearfix">
-            <fieldset class="mnOrder">
-                <legend>Danh sách Order</legend>
-                <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
-                <a href="<%=request.getContextPath()%>/seller/allorder.html">Tất cả đơn hàng</a>
-                <button id="lobtn">Đăng xuất</button>
-                <h2>
-                    <c:if test="${empty allOrder}"><spring:message code="order.saveempty"/></c:if>
-                </h2>
-                <form action="<%=request.getContextPath()%>/seller/order.html" method="get" id="filter">
+        <section class="adInside clearfix">
+            <fieldset class="adNav">
+                <legend> Quản lý Đơn hàng </legend>
+                <a href="<%=request.getContextPath()%>/seller/allorder.html">Tất cả Đơn hàng</a>
+                <form action="<%=request.getContextPath()%>/seller/order.html" method="get" id="filter" class="clearfix">
                     <select name="date">
                         <c:if test="${!empty date}">
                             <option value="${date}" selected="">${date}</option>
@@ -57,6 +52,13 @@
                     </select>
                     <input type="submit" value="<spring:message code="filter.filter"/>">
                 </form>
+                <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
+                <button id="lobtn">Đăng xuất</button>
+            </fieldset>
+            <fieldset class="mnOrder">
+                <legend>Danh sách Order</legend>
+                <center><small>Lưu ý: các đơn hàng phải được xử lý trong thời gian một tuần tính từ ngày đặt hàng</small></center>
+                <h2><c:if test="${empty allOrder}"><spring:message code="order.saveempty"/></c:if></h2>
                 <c:if test="${!empty allOrder}">
                     <pg:paging pageSize="3">
                         <c:forEach items="${allOrder}" var="allOrder">

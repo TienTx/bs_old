@@ -282,4 +282,44 @@ public class CustomerMemberDAO extends CustomerDAO {
         return null;
     }
 
+    @Override
+    public boolean findCustomerMemberByUserName_Email(String username, String email) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT COUNT("
+                + "tblCustomerMember.idCustomerMember) "
+                + "FROM tblCustomerMember JOIN tblCustomer "
+                + "ON "
+                + "tblCustomerMember.idCustomer = tblCustomer.idCustomer "
+                + "WHERE "
+                + "tblCustomerMember.userName = ? "
+                + "OR "
+                + "tblCustomer.email = ?;";
+        try {
+            ps = this.conn.prepareStatement(sqlSelect);
+            ps.setString(1, username);
+            ps.setString(2, email);
+
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int num = rs.getInt(1);
+                return (num >= 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
 }

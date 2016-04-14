@@ -111,7 +111,7 @@
                     <% rowsScIndex3 = 0;%>
                 </c:if>
             </select>
-            <input type="text" name="vl" required="" id="searchVal">
+            <input type="text" name="vl" required="" id="searchVal" pattern=".{1,50}">
             <input type="submit" value="" class="hide">
         </form>
     </section>
