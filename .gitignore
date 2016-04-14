@@ -1,4 +1,3 @@
 /build
-/nbproject
-/test
-/dist/
+/web/WEB-INF/lib
+/dist

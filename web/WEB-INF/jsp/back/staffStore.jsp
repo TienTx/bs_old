@@ -26,78 +26,84 @@
         <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapjs" />
     </head>
     <body>
-        <section class="inside clearfix">
-            <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
-            <button id="lobtn">Đăng xuất</button>
-            <fieldset>
-                <legend>Thêm khuyến mãi</legend>
-                <form action="" method="post" id="addDeals">
-                    <h2 class="hide">Thêm không thành công! Vui lòng thử lại!</h2>
-                    <input type="text" name="code" required="" value=""
-                           placeholder="Mã khuyến mãi ..." title="">
-                    <input type="text" name="description" required="" value=""
-                           placeholder="Mô tả khuyến mãi ..." title="">
-                    <input type="text" name="discount" required="" value=""
-                           placeholder="Giảm giá ..." title="">
-                    <input type="text" name="startDate" required="" value=""
-                           placeholder="Ngày áp dụng ..." title="">
-                    <input type="text" name="endDate" required="" value=""
-                           placeholder="Ngày hết hạn ..." title="">
-                    <input type="submit" value="Thêm">
-                </form>
+        <section class="adInside clearfix">
+            <fieldset class="adNav">
+                <legend> Quản lý Khuyến mãi </legend>
+                <a href="<%=request.getContextPath()%>/staffstore/alldeals.html">Tất cả Khuyến mãi</a>
+                <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
+                <button id="lobtn">Đăng xuất</button>
             </fieldset>
-            <c:if test="${!empty allDeals}">
-                <fieldset>
-                    <legend>Tất cả khuyến mãi</legend>
-                    <table class="outtables">
-                        <tr>
-                            <th>STT</th>
-                            <th>Mã</th>
-                            <th>Mô tả</th>
-                            <th>Giảm giá</th>
-                            <th>Ngày áp dụng</th>
-                            <th>Ngày hết hạn</th>
-                            <th>Trạng thái</th>
-                            <th>Tuỳ chọn</th>
-                        </tr>
-                        <pg:paging pageSize="10">
-                            <c:forEach items="${allDeals}" var="allDeals">
-                                <pg:item>
-                                    <tr>
-                                        <td>${allDeals.idDeals}</td>
-                                        <td>${allDeals.code}</td>
-                                        <td>${allDeals.description}</td>
-                                        <td>${allDeals.discount}%</td>
-                                        <td>${allDeals.startDate}</td>
-                                        <td>${allDeals.endDate}</td>
-                                        <td>
-                                            <c:if test="${allDeals.status eq 1}">
-                                                Áp dụng
-                                            </c:if>
-                                            <c:if test="${allDeals.status eq 0}">
-                                                Không áp dụng
-                                            </c:if>
-                                        </td>
-                                        <td>
-                                            <button class="deleteDeals" data-bind="${allDeals.idDeals}">Xoá</button>
-                                            <a href="<%=request.getContextPath()%>/staffstore/deals/${allDeals.idDeals}-${allDeals.code}.html">Chi tiết</a>
-                                        </td>
-                                    </tr>
-                                </pg:item>
-                            </c:forEach>
-                        </pg:paging>
-                    </table>
-                    <c:if test="${!empty pageCount}">
-                        <section class="pageNum clearfix">
-                            <c:forEach var="i" begin="1" end="${pageCount}">
-                                <a href="<%=request.getContextPath()%>${requestScope['javax.servlet.forward.servlet_path']}?pageNum=${i}">
-                                    ${i}
-                                </a>
-                            </c:forEach>
-                        </section>
-                    </c:if>
+            <section class="mnOrder">
+                <fieldset class="fsMn">
+                    <legend>Thêm khuyến mãi</legend>
+                    <form action="" method="post" id="addDeals">
+                        <h2 class="hide">Thêm không thành công! Vui lòng thử lại!</h2>
+                        <input type="text" name="code" required="" value=""
+                               placeholder="Mã khuyến mãi ..." title="">
+                        <input type="text" name="description" required="" value=""
+                               placeholder="Mô tả khuyến mãi ..." title="">
+                        <input type="text" name="discount" required="" value=""
+                               placeholder="Giảm giá ..." title="">
+                        <input type="text" name="startDate" required="" value=""
+                               placeholder="Ngày áp dụng ..." title="">
+                        <input type="text" name="endDate" required="" value=""
+                               placeholder="Ngày hết hạn ..." title="">
+                        <input type="submit" value="Thêm">
+                    </form>
                 </fieldset>
-            </c:if>
+                <c:if test="${!empty allDeals}">
+                    <fieldset class="fsMn">
+                        <legend>Tất cả khuyến mãi</legend>
+                        <table class="outtables">
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã</th>
+                                <th>Mô tả</th>
+                                <th>Giảm giá</th>
+                                <th>Ngày áp dụng</th>
+                                <th>Ngày hết hạn</th>
+                                <th>Trạng thái</th>
+                                <th>Tuỳ chọn</th>
+                            </tr>
+                            <pg:paging pageSize="10">
+                                <c:forEach items="${allDeals}" var="allDeals">
+                                    <pg:item>
+                                        <tr>
+                                            <td>${allDeals.idDeals}</td>
+                                            <td>${allDeals.code}</td>
+                                            <td>${allDeals.description}</td>
+                                            <td>${allDeals.discount}%</td>
+                                            <td>${allDeals.startDate}</td>
+                                            <td>${allDeals.endDate}</td>
+                                            <td>
+                                                <c:if test="${allDeals.status eq 1}">
+                                                    Áp dụng
+                                                </c:if>
+                                                <c:if test="${allDeals.status eq 0}">
+                                                    Không áp dụng
+                                                </c:if>
+                                            </td>
+                                            <td>
+                                                <button class="deleteDeals" data-bind="${allDeals.idDeals}">Xoá</button>
+                                                <a href="<%=request.getContextPath()%>/staffstore/deals/${allDeals.idDeals}-${allDeals.code}.html">Chi tiết</a>
+                                            </td>
+                                        </tr>
+                                    </pg:item>
+                                </c:forEach>
+                            </pg:paging>
+                        </table>
+                        <c:if test="${!empty pageCount}">
+                            <section class="pageNum clearfix">
+                                <c:forEach var="i" begin="1" end="${pageCount}">
+                                    <a href="<%=request.getContextPath()%>${requestScope['javax.servlet.forward.servlet_path']}?pageNum=${i}">
+                                        ${i}
+                                    </a>
+                                </c:forEach>
+                            </section>
+                        </c:if>
+                    </fieldset>
+                </c:if>
+            </section>
         </section>
         <script type="text/javascript" src="${jquery}"></script>
         <script type="text/javascript" src="${adscript}"></script>

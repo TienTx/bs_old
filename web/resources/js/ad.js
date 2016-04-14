@@ -177,6 +177,7 @@ $(document).ready(function () {
         $(this).parent().find("#editDeals").removeClass("hide");
         $(this).addClass("hide");
     });
+    $('.adNav').height($('.mnOrder').height());
 });
 
 // StaffManager

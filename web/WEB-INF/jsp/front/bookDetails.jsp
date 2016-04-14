@@ -21,7 +21,7 @@
                     <section class="bookdetails">
                         <a class="cvim" href="<%=request.getContextPath()%>/book/${crBook.idBook}-${crBook.sortLink}.html">
                             <img src="${image}/${crBook.image}" alt="${crBook.title}">
-                            <section class="fb-like" data-href="${crBook.idBook}" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></section>
+                            <!--<section class="fb-like" data-href="" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></section>-->
                         </a>
                         <section class="dtls">
                             <h1>

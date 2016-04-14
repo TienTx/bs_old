@@ -28,6 +28,8 @@ public abstract class CustomerDAO implements Serializable {
 
     public abstract boolean addCustomerMember(Customer cus);
 
+    public abstract boolean findCustomerMemberByUserName_Email(String username, String email);
+
     public abstract String getCustomerDAOType();
 
 }

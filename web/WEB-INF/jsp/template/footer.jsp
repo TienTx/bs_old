@@ -16,7 +16,7 @@
             <footer class="clearfix">
                 <section class="insidefooter clearfix">
                     <section class="cl1">
-                        <div class="fb-page" data-href="https://www.facebook.com/facebook" data-width="380" data-height="150" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/facebook"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div></div>
+                        <!--<div class="fb-page" data-href="https://www.facebook.com/facebook" data-width="380" data-height="150" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/facebook"><a href="https://www.facebook.com/facebook">Facebook</a></blockquote></div></div>-->
                     </section>
                     <section class="cl">
                         <h1><spring:message code="nav.category"/></h1>

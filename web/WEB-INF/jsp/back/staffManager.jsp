@@ -64,7 +64,7 @@
     </c:if>
 </section>
 
-            
+
 <section class="page">
     <c:forEach items="${pages }" var="page">
         <a href="${url }?pageNum=${page } ">${page } </a>
@@ -108,4 +108,5 @@
         </pg:paging>
     </table> <!-- End Table -->
 </section> <!-- End AllBook -->
+<!--</section>-->
 <%@include file="inc/footer.jsp" %>
