@@ -329,8 +329,14 @@ public class MyTool {
     }
 
     /* Xử lý phân trang */
-    public ArrayList<Integer> getPages(int pageAvailabel, int currentPage, int numProduct) {
+    public ArrayList<Integer> getPages(int size, int currentPage, int numProduct) {
         ArrayList<Integer> listI = new ArrayList<>();
+        int pageAvailabel = 0; 
+        if (size % numProduct == 0) {
+            pageAvailabel = size / numProduct;
+        } else {
+            pageAvailabel = size / 9 + 1;
+        }
         int n = pageAvailabel;
         int nAdd;
         int m = currentPage;
@@ -342,9 +348,7 @@ public class MyTool {
                     if (i + nAdd >= n) {
                         break;
                     }
-                } else {
-                    listI.add(i);
-                }
+                } else { listI.add(i); }
             }
         } else {
             for (int i = 1; i <= n; i++) {

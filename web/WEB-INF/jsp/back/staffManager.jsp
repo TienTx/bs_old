@@ -14,6 +14,57 @@
 <a href="${pageContext.request.contextPath }/staffmanager/addBook"
    class="addBook"> Thêm sách</a>
 
+<section class="search">
+    <form method="get" action="" name="adsearchFrm" id="adsearchFrm">
+        <select name="op" id="searchOption">
+            <option class="op" value="n1" selected="selected">
+                &raquo; <spring:message code="search.searchbyname"/> 
+            </option>
+            <option class="op" disabled="disabled">
+                <spring:message code="search.searchbycategory"/>
+            </option>
+            <c:if test="${!empty listCandBS[0]}">
+                <c:forEach items="${listCandBS[0]}" var="rowsC">
+                    <option class="op" value="ct${rowsC.idCategory}">&raquo; ${rowsC.name}</option>
+                </c:forEach>
+            </c:if>
+            <option class="op" disabled="disabled"><spring:message code="search.searchbybookset"/></option>
+            <c:if test="${!empty listCandBS[1]}">
+                <c:forEach items="${listCandBS[1]}" var="rowsBS">
+                    <option class="op" value="bs${rowsBS.idBookSet}">&raquo; ${rowsBS.name}</option>
+                </c:forEach>
+            </c:if>
+        </select>
+        <input type="text" name="key" id="searchVal">
+        <input type="submit" value="Tìm kiếm">
+    </form>
+    <h1>&clubs; <spring:message code="book.bookset"/>:</h1>
+    <c:if test="${!empty listCandBS[0]}">
+        <ul class="allC">
+            <c:forEach items="${listCandBS[0]}" var="rowsC">
+                <li>
+                    <a href="${pageContext.request.contextPath }/staffmanager?ct=${rowsC.idCategory }&name=${rowsC.sortLink}">
+                        &raquo; ${rowsC.name}
+                    </a>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:if>
+    <h1>&clubs; <spring:message code="book.category"/>:</h1>
+    <c:if test="${!empty listCandBS[1]}">
+        <ul class="allBS">
+            <c:forEach items="${listCandBS[1]}" var="rowsBS">
+                <li>
+                    <a href="${pageContext.request.contextPath }/staffmanager?bs=${rowsBS.idBookSet }&name=${rowsBS.sortLink}">
+                        &raquo; ${rowsBS.name}
+                    </a>
+                </li>
+            </c:forEach>
+        </ul>
+    </c:if>
+</section>
+
+
 <section class="page">
     <c:forEach items="${pages }" var="page">
         <a href="${url }?pageNum=${page } ">${page } </a>
