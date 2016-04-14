@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/F:/FileCode/NetBeans/bookstore/web/WEB-INF/jsp/back/applyDeals.jsp</file>
             <file>file:/F:/FileCode/NetBeans/bookstore/src/java/controller/admin/StaffManagerCtr.java</file>
-            <file>file:/F:/FileCode/NetBeans/bookstore/src/java/controller/admin/StaffStoreCtr.java</file>
+            <file>file:/F:/FileCode/NetBeans/bookstore/src/java/dao/SingleDBConnection.java</file>
             <file>file:/F:/FileCode/NetBeans/bookstore/src/java/dao/book/BookDAO.java</file>
             <file>file:/F:/FileCode/NetBeans/bookstore/web/WEB-INF/jsp/back/staffManager.jsp</file>
+            <file>file:/F:/FileCode/NetBeans/bookstore/src/java/tool/MyTool.java</file>
         </group>
     </open-files>
 </project-private>
