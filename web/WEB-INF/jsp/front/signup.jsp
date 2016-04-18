@@ -8,18 +8,25 @@
 
 <section class="inside clearfix mg">
     <section class="content">
-        <c:if test="${!empty registed && registed == true}">
-            <section id="registed">
-                <h2><spring:message code="user.registed"/></h2> &nbsp;
-                <a id="lgnow"><spring:message code="user.loginnow"/></a>
-            </section>
-        </c:if>
-        <c:if test="${!empty rgError && rgError == true}">
-            <h2 id="signuperror"><spring:message code="user.signuperror"/></h2>
-        </c:if>
+        <%--<c:if test="${!empty registed && registed == true}">--%>
+        <section id="registed">
+            <h2>
+                <spring:message code="user.registed"/><br>
+                <spring:message code="user.newcardpoint"/><br>
+                <span id="cpif">&nbsp;</span>
+            </h2> &nbsp;
+            <h2><a id="lgnow"><spring:message code="user.loginnow"/></a></h2>
+        </section>
+        <%--</c:if>--%>
+        <h2 id="signuperror" class="hide"><spring:message code="user.signuperror"/></h2>
+        <%--<c:if test="${!empty rgError && rgError == true}">--%>
+        <!--            <h2 id="signuperror">-->
+        <%--<spring:message code="user.signuperror"/>--%>
+        <!--</h2>-->
+        <%--</c:if>--%>
         <fieldset>
             <legend><spring:message code="user.signup"/></legend>
-            <form method="post" action="<%=request.getContextPath()%>/user/signup.html">
+            <form method="post" action="" id="signupFrm">
                 <input required="" type="text" name="firstName" placeholder="<spring:message code="user.firstname"/>"
                        title="<spring:message code="user.firstnametitle"/>"
                        value="${firstName}"
@@ -53,19 +60,19 @@
                        pattern="\d{1,10}">
                 <input required="" type="text" name="lane" placeholder="<spring:message code="user.lane"/>"
                        value="${lane}"
-                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]{1,10}">
+                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{1,10}">
                 <input required="" type="text" name="street" placeholder="<spring:message code="user.street"/>"
                        value="${street}"
-                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]{6,20}">
+                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
                 <input required="" type="text" name="ward" placeholder="<spring:message code="user.ward"/>"
                        value="${ward}"
-                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]{6,20}">
+                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
                 <input required="" type="text" name="district" placeholder="<spring:message code="user.district"/>"
                        value="${district}"
-                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]{6,20}">
+                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
                 <input required="" type="text" name="city" placeholder="<spring:message code="user.city"/>"
                        value="${city}"
-                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]{6,20}">
+                       pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
                 <select name="country">
                     <option value="Việt Nam" selected="">Việt Nam</option>
                     <option value="UK">UK</option>

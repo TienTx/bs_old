@@ -179,14 +179,19 @@ public class CartDAO {
         ResultSet rs2 = null;
         ArrayList<Cart> list = new ArrayList<>();
         try {
-            ps = conn.prepareStatement("SELECT tblCartSave.idCart FROM tblCartSave WHERE tblCartSave.idCustomerMember = ?;");
+            ps = conn.prepareStatement("SELECT DISTINCT "
+                    + "tblCartSave.idCart, tblCart.bonnusPoint "
+                    + "FROM tblCartSave JOIN tblCart ON "
+                    + "tblCartSave.idCart = tblCart.idCart "
+                    + "WHERE tblCartSave.idCustomerMember = ?;");
             ps.setInt(1, mbId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int idCart = rs.getInt(1);
+                int bonnusPoint = rs.getInt(2);
                 ArrayList<BookOrder> listBookOrder = new ArrayList<>();
                 float totalPrice = 0;
-                ps = conn.prepareStatement("SELECT "
+                ps = conn.prepareStatement("SELECT DISTINCT "
                         + "tblBookOrder.idBookOrder, "
                         + "tblBookOrder.quantity, "
                         + "tblBookOrder.totalPrice, "
@@ -234,7 +239,7 @@ public class CartDAO {
                         totalPrice += rs2.getFloat(3);
                     }
                 }
-                Cart cart = new Cart(idCart, listBookOrder, totalPrice);
+                Cart cart = new Cart(idCart, listBookOrder, bonnusPoint, totalPrice);
                 list.add(cart);
             }
             return list;
@@ -268,15 +273,20 @@ public class CartDAO {
         try {
             ArrayList<BookOrder> listBookOrder = new ArrayList<>();
             float totalPrice = 0;
-            ps = conn.prepareStatement("SELECT "
+            ps = conn.prepareStatement("SELECT DISTINCT "
                     + "tblBookOrder.idBookOrder, "
                     + "tblBookOrder.quantity, "
                     + "tblBookOrder.totalPrice, "
-                    + "tblBookOrder.idBook "
-                    + "FROM tblBookOrder WHERE tblBookOrder.idCart = ?;");
+                    + "tblBookOrder.idBook, "
+                    + "tblCart.bonnusPoint "
+                    + "FROM tblCart JOIN tblBookOrder "
+                    + "ON tblCart.idCart = tblBookOrder.idCart"
+                    + " WHERE tblBookOrder.idCart = ?;");
             ps.setInt(1, idCart);
             rs2 = ps.executeQuery();
+            int bonnusPoint = 0;
             while (rs2.next()) {
+                bonnusPoint = rs2.getInt(5);
                 int idBook = rs2.getInt(4);
                 ps = conn.prepareStatement("SELECT DISTINCT "
                         + "tblBook.idBook, "
@@ -317,7 +327,7 @@ public class CartDAO {
                 }
             }
             if (listBookOrder != null && totalPrice != 0) {
-                Cart cart = new Cart(idCart, listBookOrder, totalPrice);
+                Cart cart = new Cart(idCart, listBookOrder, bonnusPoint, totalPrice);
                 return cart;
             }
         } catch (Exception e) {

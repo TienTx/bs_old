@@ -41,6 +41,7 @@ public class CartCtr {
             model = new ModelAndView("/front/cart");
         } else {
             model = new ModelAndView("/front/memberCart");
+//            model.addObject("crMbUn", crCusMb.getCustomerMemberUsername());
         }
         LoadDefaultData.getAndSetCookieAndScopeOfCategoryAndBookSet(request, response, model);
         Cart cart = (Cart) session.getAttribute("cart");
@@ -81,7 +82,8 @@ public class CartCtr {
                 oldTotalPrice = cart.getTotalPrice();
             }
             listBookOrder.add(bookOrder);
-            cart = new Cart(listBookOrder, oldTotalPrice + price);
+            cart = new Cart(listBookOrder, 0, oldTotalPrice + price);
+//            cart = new Cart(listBookOrder, oldTotalPrice + price);
             res = cart.getListBook().size() + "#" + cart.getTotalPrice();
             session.setAttribute("cart", cart);
             session.setAttribute("cartStr", res);

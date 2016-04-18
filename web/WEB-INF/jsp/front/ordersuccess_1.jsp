@@ -1,4 +1,4 @@
-
+<%@page import="entity.order.Cart"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -9,9 +9,8 @@
 
 <section class="inside clearfix mg">
     <section class="content">
-        <fieldset>
-            <legend><spring:message code="nav.storeinfor"/></legend>
-            <center><spring:message code="order.csdt"/></center>
+        <fieldset id="addressShipping">
+            <legend><spring:message code="order.ordersuccess"/></legend>
         </fieldset>
     </section>
     <%@include file="inc/rightAside.jsp" %>

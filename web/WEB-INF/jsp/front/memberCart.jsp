@@ -84,7 +84,7 @@
                             <td colspan="10">
                                 <input class="hide" type="submit" value="<spring:message code="cart.update"/>" name="updateCart" id="updateCart" disabled="">
                                 <input type="submit" value="Lưu" name="saveCart" id="saveCart">
-                                <a class="otherop" href="<%=request.getContextPath()%>/order.html"><spring:message code="cart.order"/></a>
+                                <button class="mbcartOrder otherop"><spring:message code="cart.order"/></button>
                                 <a class="otherop" href="<%=request.getContextPath()%>/home.html"><spring:message code="cart.continue"/></a>
                             </td>
                         </tr>

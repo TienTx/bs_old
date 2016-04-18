@@ -175,6 +175,7 @@ public class MemberCtr {
         } else {
             model = new ModelAndView("/front/addressShipping");
             model.addObject("customerMemberUsername", mb.getCustomerMemberUsername());
+            model.addObject("crTotalPrice", crCart.getTotalPrice());
             LoadDefaultData.getAndSetCookieAndScopeOfCategoryAndBookSet(request, response, model);
             return model;
         }

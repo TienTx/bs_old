@@ -132,7 +132,8 @@ public class ShippingInforDAO {
                     + "tblShippingInfor.country "
                     + "FROM tblShippingInfor JOIN tblCustomerMember "
                     + "ON tblShippingInfor.idCustomer = tblCustomerMember.idCustomer "
-                    + "WHERE tblCustomerMember.idCustomer = ?;");
+                    + "WHERE tblCustomerMember.idCustomer = ? "
+                    + "ORDER BY tblShippingInfor.idShippingInfor DESC;");
             ps.setInt(1, cus.getIdCustomer());
             rs = ps.executeQuery();
             while (rs.next()) {

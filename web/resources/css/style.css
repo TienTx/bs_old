@@ -1297,8 +1297,12 @@ footer section.insidefooter{
     text-align: center;
     align-items: center;
     justify-content: center;
-    display: flex;
+    display: none;
     cursor: pointer;
+}
+#registed h2:last-child{
+    width: 100%;
+    clear: both;
 }
 .content section#registed h2{
     cursor: pointer;
@@ -1625,4 +1629,60 @@ footer section.insidefooter{
 }
 .adInside .mnOrder .pageNum a{
     background: #FFF;
+}
+/*aaaaaaaaaaaaaaaaaaaaaaaaaaa*/
+#addressShipping ul, .odcart ul{
+    width: 100%;
+    display: inline-flex;
+    text-align: center;
+    padding: 15px 0;
+}
+#addressShipping ul li, .odcart ul li{
+    margin: auto;
+    line-height: 30px;
+    width: 45%;
+    box-shadow: inset 0px 0px 2px rgba(0,0,0,0.35);
+    cursor: pointer;
+}
+#addressShipping ul li:first-child, .odcart ul li:first-child{
+    margin-left: 5%;
+    box-shadow: inset 0px 2px 0px rgba(0,0,0,0.65);
+    border-radius: 7px 0px 0px 7px;
+}
+#addressShipping ul li:last-child, .odcart ul li:last-child{
+    margin-left: -5%;
+    border-radius: 0px 7px 7px 0px;
+}
+#addressShipping ul li:hover, .odcart ul li:hover{
+    /*     box-shadow: inset 0px 2px 0px rgba(0,0,0,0.65); */
+}
+#addressShipping label, .odcart label{
+    text-align: center;
+}
+#addressShipping #ncp, .odcart #ncp{
+    display: none;
+}
+#addressShipping #cp, .odcart #cp{
+    position: relative;
+}
+/*#code, .code{
+    position: relative;
+}*/
+#cp span{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    background: url('../image/icon/rr.jpg') top left no-repeat;
+    background-size: cover;
+    right: 135px;
+    top: 25px;
+    /*     display: none; */
+}
+#cp span#wrong{
+    background-position: -29px;
+}
+#codeif{
+    width: 100%;
+    clear: both;
+    text-align: center;
 }

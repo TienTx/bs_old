@@ -107,7 +107,7 @@ public class CustomerMemberDAO extends CustomerDAO {
     }
 
     @Override
-    public boolean addCustomerMember(Customer cus) {
+    public int addCustomerMember(Customer cus) {
         PreparedStatement psAddress = null;
         PreparedStatement psFullName = null;
         PreparedStatement psPerson = null;
@@ -185,7 +185,7 @@ public class CustomerMemberDAO extends CustomerDAO {
                                             psCustomerMember.setInt(5, idCustomer);
                                             int numCustomerMember = psCustomerMember.executeUpdate();
                                             if (numCustomerMember == 1) {
-                                                return true;
+                                                return idCustomer;
                                             } else {
                                                 psAddress = this.conn.prepareStatement("DELETE FROM tblAddress "
                                                         + "WHERE tblAddress.idAddress = ?;");
@@ -274,7 +274,7 @@ public class CustomerMemberDAO extends CustomerDAO {
                 e.printStackTrace();
             }
         }
-        return false;
+        return -1;
     }
 
     @Override
