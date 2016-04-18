@@ -82,6 +82,7 @@ public class SellerCtr {
         } else {
             model = new ModelAndView("/back/seller");
             model.addObject("title", "Seller");
+            model.addObject("seller", ee.getFullName().getFullName(ee.getFullName().getFirstName(), ee.getFullName().getMiddleName(), ee.getFullName().getLastName()));
             try {
                 ArrayList<Order> allOrder = new OrderDAO().getAllOrder();
                 model.addObject("allOrder", allOrder);
@@ -106,26 +107,33 @@ public class SellerCtr {
             @RequestParam("date") String date,
             HttpServletRequest request, HttpServletResponse response
     ) throws IOException {
-        ArrayList<Order> allOrder = (ArrayList<Order>) session.getAttribute("crAllOrder");
-        if (!date.matches("[2-9]([0-9]){3,}-[0-1][0-9]-[0-3][0-9]")
-                || allOrder == null || allOrder.size() <= 0) {
-            response.sendRedirect(request.getContextPath() + "/seller/allorder.html");
+        Employee ee = (Employee) session.getAttribute("emLogged");
+        if (ee == null || !ee.geteType().equals("seller")) {
+            response.sendRedirect(request.getContextPath() + "/home.html");
         } else {
-            model = new ModelAndView("/back/orderByDate");
-            int allOrderSize = allOrder.size();
-            ArrayList<Order> orderByDate = new ArrayList<>();
-            for (int i = 0; i < allOrderSize; i++) {
-                if (allOrder.get(i).getDate().toString().equals(date)) {
-                    orderByDate.add(allOrder.get(i));
-                }
-            }
-            if (orderByDate == null || orderByDate.size() <= 0) {
-                model.addObject("emptyOrderByDate", true);
+            ArrayList<Order> allOrder = (ArrayList<Order>) session.getAttribute("crAllOrder");
+            if (!date.matches("[2-9]([0-9]){3,}-[0-1][0-9]-[0-3][0-9]")
+                    || allOrder == null || allOrder.size() <= 0) {
+                response.sendRedirect(request.getContextPath() + "/seller/allorder.html");
             } else {
-                model.addObject("orderByDate", orderByDate);
-                model.addObject("date", date);
+                model = new ModelAndView("/back/orderByDate");
+                model.addObject("title", "Seller");
+                model.addObject("seller", ee.getFullName().getFullName(ee.getFullName().getFirstName(), ee.getFullName().getMiddleName(), ee.getFullName().getLastName()));
+                int allOrderSize = allOrder.size();
+                ArrayList<Order> orderByDate = new ArrayList<>();
+                for (int i = 0; i < allOrderSize; i++) {
+                    if (allOrder.get(i).getDate().toString().equals(date)) {
+                        orderByDate.add(allOrder.get(i));
+                    }
+                }
+                if (orderByDate == null || orderByDate.size() <= 0) {
+                    model.addObject("emptyOrderByDate", true);
+                } else {
+                    model.addObject("orderByDate", orderByDate);
+                    model.addObject("date", date);
+                }
+                return model;
             }
-            return model;
         }
         return null;
     }

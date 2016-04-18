@@ -1526,8 +1526,8 @@ footer section.insidefooter{
     border-radius: 5px;
 } */
 
-.adInside{
-    /*width: 1200px;*/
+/*.adInside{
+    width: 1200px;
     width: 100%;
     position: relative;
     margin: 0 auto;
@@ -1541,7 +1541,7 @@ footer section.insidefooter{
     min-height: 500px;
     text-align: center;
     background: #5E412F;
-    /*background: #252C33;*/
+    background: #252C33;
     color: #FFF;
 }
 .adNav legend{
@@ -1602,7 +1602,7 @@ footer section.insidefooter{
     width: calc(100% - 190px);
     min-height: 700px;
     background: #FCEBB6;
-    /*background: #9DA2A5;*/
+    background: #9DA2A5;
 }
 .adInside .mnOrder h2{
     color: #FFF;
@@ -1621,7 +1621,7 @@ footer section.insidefooter{
     text-align: center;
     color: #5E412F;
     background: #FCEBB6;
-    /*background: #9DA2A5;*/
+    background: #9DA2A5;
 }
 .adInside .mnOrder .pageNum{
     width: 100%;
@@ -1629,7 +1629,7 @@ footer section.insidefooter{
 }
 .adInside .mnOrder .pageNum a{
     background: #FFF;
-}
+}*/
 /*aaaaaaaaaaaaaaaaaaaaaaaaaaa*/
 #addressShipping ul, .odcart ul{
     width: 100%;
@@ -1685,4 +1685,215 @@ footer section.insidefooter{
     width: 100%;
     clear: both;
     text-align: center;
+}
+/*----------------admin--------------*/
+.adInside{
+    margin: 0 auto;
+    position: relative;
+    width: 1175px;
+}
+.adInside h1{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+    background: #67A011;
+    color: #FFF;
+    margin-bottom: 15px;
+}
+.adInside .rightaside{
+    float: left;
+    width: 200px;
+    background: #67A011;
+    margin: 0;
+    padding: 20px 0 0 0;
+/*    border-bottom: #FFF thin solid;
+    box-sizing: border-box;*/
+}
+.rightaside a{
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    color: #FFF;
+    margin: 2px 0;
+    float: left;
+}
+/*.rightaside a:hover{
+    font-size: 15px;
+    color: #FFF;
+}*/
+.rightaside form{
+    width: 100%;
+    margin: 5px 0 20px 0;
+    padding: 0;
+    height: 30px;
+    clear: both;
+    float: left;
+}
+.rightaside form select{
+    width: 150px;
+    text-align: center;
+    float: left;
+    border: none;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 0;
+    background: #FFF;
+}
+.rightaside form input{
+    float: right;
+    width: 50px;
+    height: 30px;
+    line-height: 30px;
+    border: none;
+    border-radius: 0;
+    background: #FFF;
+}
+.rightaside .mninfor, .rightaside .mninfor legend{
+/*     background: #FFF; */
+    text-align: center;
+    color: #FFF;
+}
+.rightaside .mninfor legend{
+    box-shadow: 0px 2px 0px #FFF inset;
+}
+.mninfor{
+    border-bottom: #FFF 2px solid;
+    box-sizing: border-box;
+    min-height: 200px;
+}
+.mninfor legend{
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.mninfor a, .mninfor button{
+    width: 100%;
+    color: #FFF;
+    background: none;
+    border: none;
+    font-size: 14px;
+    font-family: Arial;
+    margin: 2px 0;
+    height: 25px;
+    line-height: 25px;
+}
+.mninfor a:hover, .mninfor button:hover, .rightaside a:hover{
+    box-shadow: 0px -1px 2px #FFF inset;
+    color: #FFF;
+/*    box-shadow: 0px 1px 2px gray inset;
+    color: #000;*/
+}
+.adInside .fsdata{
+    float: right;
+    width: 975px;
+}
+.fsdata legend{
+    text-align: center;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.fsdata center{
+    margin: 0 0 10px 0;
+}
+.fsdata .pageNum{
+    width: 100%;
+    margin-top: 10px;
+}
+.fsdata .fsMn{
+    margin-bottom: 10px;
+}
+.fsdata .fsMn, .fsMn form{
+    width: 100%;
+    clear: both;
+    text-align: center;
+}
+.fsMn form input[type="text"],
+.fsMn form select{
+    width: 500px;
+    margin: 3px 237.5px;
+    clear: both;
+    text-align: center;
+}
+.fsMn a.apd{
+    margin-right: 237.5px;
+    margin-left: 5px;
+}
+.fsMn button#cancelEdit,
+.fsMn button#editDeals, .fsMn a.apd{
+    float: right;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-family: Arial;
+    color: #000;
+    box-shadow: 0px 0px 2px gray;
+    height: 25px;
+    line-height: 25px;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+.fsMn button#cancelEdit:hover,
+.fsMn button#editDeals:hover, .fsMn a.apd:hover{
+    box-shadow: 0px 1px 2px gray inset;
+    color: #000;
+}
+.fsMn #adsearchFrm{
+    float: left;
+    width: 487.5px;
+    min-height: 200px;
+}
+.fsMn #adsearchFrm select{
+    float: left;
+    margin: 70px 0 0 0;
+    width: 230px;
+    clear: none;
+}
+.fsMn #adsearchFrm input[type="text"]{
+    width: 240px;
+    float: left;
+    margin: 70px 0 0 0;
+    clear: none;
+}
+.fsdata hr{
+    width: 100%;
+    clear: both;
+}
+.fsMn h1{
+    width: 487.5px;
+    float: right;
+    height: 25px;
+    line-height: 25px;
+    font-size: 14px;
+    background: none;
+    color: #000;
+    margin: 0;
+}
+.fsMn ul{
+    width: 487.5px;
+    float: right;
+}
+.fsMn ul li{
+    width: 400px;
+    padding-left: 87.5px;
+    height: 20px;
+    line-height: 20px;
+    text-align: left;
+}
+.fsMn h3{
+    width: 100%;
+    clear: both;
+    height: 25px;
+    line-height: 25px;
+}
+.adfooter{
+    background: #67A011;
+    border: none;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #FFF;
+    margin-top: 10px;
 }

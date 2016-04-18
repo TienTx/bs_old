@@ -24,30 +24,29 @@
         <spring:url value="/resources/js/ad.js" var="adscript" />
         <spring:url value="/resources/js/html5.js" var="html5" />
         <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapjs" />
-        <spring:url value="/resources/tinymce/tinymce.min.js" var="tinymce" />
-        <script type="text/javascript" src="${tinymce}"></script>
-        <script>tinymce.init({selector: 'textarea'});</script>
     </head>
     <body>
         <section class="adInside clearfix">
-            <fieldset class="adNav">
-                <legend> Quản lý Khuyến mãi </legend>
+            <h1> Staff Store - Quản lý Khuyến mãi </h1>
+            <aside class="rightaside">
                 <a href="<%=request.getContextPath()%>/staffstore/alldeals.html">Tất cả Khuyến mãi</a>
-                <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
-                <button id="lobtn">Đăng xuất</button>
-            </fieldset>
-            <section class="mnOrder">
+                <fieldset class="mninfor">
+                    <legend>Staff Store: <i>${staffstore}</i></legend>
+                    <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
+                    <button id="lobtn">Đăng xuất</button>
+                </fieldset>
+            </aside>
+            <section class="fsdata">
                 <c:if test="${!empty crDeals}">
-                    <fieldset>
+                    <fieldset class="fsMn">
                         <legend>Thông tin khuyến mãi</legend>
                         <form action="" method="post" id="dtDeals">
                             <h2 class="hide">Sửa không thành công! Vui lòng thử lại!</h2>
                             <input type="text" name="code" required="" value="${crDeals.code}"
                                    placeholder="Mã khuyến mãi ..." title="" >
-                            <texarea name="description" required=""
-                                     placeholder="Mô tả khuyến mãi ..." title="">
-                                ${crDeals.description}
-                            </texarea>
+                            <input type="text" name="description" required=""
+                                   placeholder="Mô tả khuyến mãi ..." title=""
+                                   value="${crDeals.description}" >
                             <input type="text" name="discount" required="" value="${crDeals.discount}"
                                    placeholder="Giảm giá ..." title="" >
                             <input type="text" name="startDate" required="" value="${crDeals.startDate}"
@@ -67,14 +66,15 @@
                             <input type="hidden" value="${crDeals.idDeals}" name="idD">
                             <input type="submit" value="OK" >
                         </form>
-                        <button id="editDeals">Sửa</button>
-                        <button id="cancelEdit" class="hide">Huỷ</button>
-                        <a href="<%=request.getContextPath()%>/staffstore/deals/${crDeals.idDeals}-${crDeals.code}/applydeals.html">
+                        <a class="apd" href="<%=request.getContextPath()%>/staffstore/deals/${crDeals.idDeals}-${crDeals.code}/applydeals.html">
                             Thêm sách áp dụng khuyến mãi
                         </a>
+                        <button id="cancelEdit" class="hide">Huỷ</button>
+                        <button id="editDeals">Sửa Khuyến mãi</button>
                     </fieldset>
+                    <hr>
                 </c:if>
-                <fieldset>
+                <fieldset class="fsMn">
                     <legend>Sách áp dụng khuyến mãi</legend>
                     <c:if test="${empty allBookByDeals}">
                         Trống
@@ -117,6 +117,7 @@
                 </fieldset>
             </section>
         </section>
+        <footer class="adInside clearfix adfooter">MyBookStore by tientx</footer>
         <script type="text/javascript" src="${jquery}"></script>
         <script type="text/javascript" src="${adscript}"></script>
         <script type="text/javascript" src="${html5}"></script>

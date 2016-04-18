@@ -27,13 +27,16 @@
     </head>
     <body>
         <section class="adInside clearfix">
-            <fieldset class="adNav">
-                <legend> Quản lý Khuyến mãi </legend>
+            <h1> Staff Store - Quản lý Khuyến mãi </h1>
+            <aside class="rightaside">
                 <a href="<%=request.getContextPath()%>/staffstore/alldeals.html">Tất cả Khuyến mãi</a>
-                <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
-                <button id="lobtn">Đăng xuất</button>
-            </fieldset>
-            <section class="mnOrder">
+                <fieldset class="mninfor">
+                    <legend>Staff Store: <i>${staffstore}</i></legend>
+                    <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
+                    <button id="lobtn">Đăng xuất</button>
+                </fieldset>
+            </aside>
+            <section class="fsdata">
                 <fieldset class="fsMn">
                     <legend>Thêm khuyến mãi</legend>
                     <form action="" method="post" id="addDeals">
@@ -105,6 +108,7 @@
                 </c:if>
             </section>
         </section>
+        <footer class="adInside clearfix adfooter">MyBookStore by tientx</footer>
         <script type="text/javascript" src="${jquery}"></script>
         <script type="text/javascript" src="${adscript}"></script>
         <script type="text/javascript" src="${html5}"></script>

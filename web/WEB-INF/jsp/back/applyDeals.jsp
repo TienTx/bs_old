@@ -27,13 +27,16 @@
     </head>
     <body>
         <section class="adInside clearfix">
-            <fieldset class="adNav">
-                <legend> Quản lý Khuyến mãi </legend>
+            <h1> Staff Store - Quản lý Khuyến mãi </h1>
+            <aside class="rightaside">
                 <a href="<%=request.getContextPath()%>/staffstore/alldeals.html">Tất cả Khuyến mãi</a>
-                <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
-                <button id="lobtn">Đăng xuất</button>
-            </fieldset>
-            <section class="mnOrder">
+                <fieldset class="mninfor">
+                    <legend>Staff Store: <i>${staffstore}</i></legend>
+                    <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
+                    <button id="lobtn">Đăng xuất</button>
+                </fieldset>
+            </aside>
+            <section class="fsdata">
                 <c:if test="${!empty crDeals}">
                     <fieldset class="fsMn">
                         <legend>Thông tin khuyến mãi</legend>
@@ -50,7 +53,7 @@
                         </c:if>
                     </fieldset>
                 </c:if>
-                <fieldset>
+                <fieldset class="fsMn">
                     <legend>Áp dụng sách khuyến mãi</legend>
                     <form method="get" action="" name="adsearchFrm" id="adsearchFrm">
                         <select name="op" id="searchOption">
@@ -108,8 +111,9 @@
                             %>
                         </ul>
                     </c:if>
+                    <hr>
                     <c:if test="${empty allBookBySearch}">
-                        Trống
+                        <h3>Trống</h3>
                     </c:if>
                     <c:if test="${!empty allBookBySearch}">
                         <table class="outtables">
@@ -161,6 +165,7 @@
                 </fieldset>
             </section>
         </section>
+        <footer class="adInside clearfix adfooter">MyBookStore by tientx</footer>
         <script type="text/javascript" src="${jquery}"></script>
         <script type="text/javascript" src="${adscript}"></script>
         <script type="text/javascript" src="${html5}"></script>

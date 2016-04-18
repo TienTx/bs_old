@@ -54,6 +54,7 @@ public class StaffStoreCtr {
         } else {
             model = new ModelAndView("/back/staffStore");
             model.addObject("title", "Staff Store");
+            model.addObject("staffstore", ee.getFullName().getFullName(ee.getFullName().getFirstName(), ee.getFullName().getMiddleName(), ee.getFullName().getLastName()));
             ArrayList<Deals> allDeals = (ArrayList<Deals>) session.getAttribute("ssAllDeals");
             if (allDeals == null) {
                 try {
@@ -88,6 +89,7 @@ public class StaffStoreCtr {
         } else {
             model = new ModelAndView("/back/deals");
             model.addObject("title", "Staff Store");
+            model.addObject("staffstore", ee.getFullName().getFullName(ee.getFullName().getFirstName(), ee.getFullName().getMiddleName(), ee.getFullName().getLastName()));
 
             String crId = pathVars.get("crId");
             String crCode = pathVars.get("crCode");
@@ -149,6 +151,7 @@ public class StaffStoreCtr {
         } else {
             model = new ModelAndView("/back/applyDeals");
             model.addObject("title", "Staff Store");
+            model.addObject("staffstore", ee.getFullName().getFullName(ee.getFullName().getFirstName(), ee.getFullName().getMiddleName(), ee.getFullName().getLastName()));
 
             String crId = pathVars.get("crId");
             String crCode = pathVars.get("crCode");
