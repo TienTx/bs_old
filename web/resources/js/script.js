@@ -234,12 +234,12 @@ $(document).ready(function () {
         $('#cpphone2').removeAttr("required");
         if ($('#ttprc').val() >= 100000) {
             $('#condition').attr("class", "hide");
-            $('#code').removeAttr("disabled");
-            $('.code').removeAttr("disabled");
+//            $('#code').removeAttr("disabled");
+//            $('.code').removeAttr("disabled");
         } else {
             $('#condition').removeClass("hide");
-            $('#code').attr("disabled", "disabled");
-            $('.code').attr("disabled", "disabled");
+//            $('#code').attr("disabled", "disabled");
+//            $('.code').attr("disabled", "disabled");
         }
     });
     $('#lincp').hover(function () {
@@ -371,7 +371,7 @@ $(document).ready(function () {
         infinite: true,
         speed: 500,
         fade: true,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 5000,
         cssEase: 'linear'
     });

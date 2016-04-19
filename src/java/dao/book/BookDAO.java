@@ -9,6 +9,7 @@ import dao.SingleDBConnection;
 import entity.book.Book;
 import entity.book.BookSet;
 import entity.book.Category;
+import entity.book.Deals;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,7 +68,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(16));
                 Category ct = new Category(id, rs.getString(16), rs.getString(17), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -133,7 +145,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(16));
                 Category ct = new Category(id, rs.getString(16), rs.getString(17), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -193,7 +216,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(16));
                 Category ct = new Category(rs.getInt(11), rs.getString(16), rs.getString(17), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -259,7 +293,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(16));
                 Category ct = new Category(rs.getInt(11), rs.getString(16), rs.getString(17), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(12), rs.getFloat(13), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -318,7 +363,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -381,7 +437,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -441,7 +508,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -505,7 +583,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -565,7 +654,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -629,7 +729,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -692,7 +803,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -755,7 +877,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -818,7 +951,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -877,7 +1021,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -936,7 +1091,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 return book;
             }
         } catch (Exception e) {
@@ -1001,7 +1167,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs.getString(17));
                 Category ct = new Category(rs.getInt(11), rs.getString(17), rs.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs.getString(3));
-                Book book = new Book(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getInt(10), ct, bs, sortLink, rs.getInt(13), rs.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             ps2 = conn.prepareStatement(sqlSelect2);
@@ -1016,7 +1193,18 @@ public class BookDAO {
                 sortLink = MyTool.convertString(rs2.getString(17));
                 Category ct = new Category(rs2.getInt(11), rs2.getString(17), rs2.getString(18), sortLink);
                 sortLink = MyTool.convertString(rs2.getString(3));
-                Book book = new Book(rs2.getInt(1), rs2.getString(2), rs2.getString(3), rs2.getString(4), rs2.getString(5), rs2.getString(6), rs2.getString(7), rs2.getString(8), rs2.getString(9), rs2.getInt(10), ct, bs, sortLink, rs2.getInt(13), rs2.getFloat(14));
+                int idBook = rs2.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs2.getString(2), rs2.getString(3), rs2.getString(4), rs2.getString(5), rs2.getString(6), rs2.getString(7), rs2.getString(8), rs2.getString(9), rs2.getInt(10), ct, bs, sortLink, rs2.getInt(13), rs2.getFloat(14), listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
                 list.add(book);
             }
             return list;
@@ -1061,7 +1249,19 @@ public class BookDAO {
 
             rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new Book(rs.getInt(1), rs.getString(2), rs.getString(3), null, null, null, null, null, null, 0, null, null, null, 0, 0));
+                int idBook = rs.getInt(1);
+                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idBook);
+                Book book = new Book(idBook, rs.getString(2), rs.getString(3), null, null, null, null, null, null, 0, null, null, null, 0, 0, listDeals);
+                int dc = 0;
+                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+                    for (int i = 0; i < book.getListDeals().size(); i++) {
+                        dc += book.getListDeals().get(i).getDiscount();
+                    }
+                }
+                float spr = Float.parseFloat(book.getSalePrice());
+                spr = spr - (spr * dc) / 100;
+                book.setSalePrice(spr + "");
+                list.add(book);
             }
             return list;
         } catch (Exception e) {
@@ -1111,6 +1311,17 @@ public class BookDAO {
                         rs.getString(19),
                         rs.getString(20),
                         MyTool.convertString(rs.getString(19))));
+//                ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(book.getIdBook());
+//                book.setListDeals(listDeals);
+//                int dc = 0;
+//                if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+//                    for (int i = 0; i < book.getListDeals().size(); i++) {
+//                        dc += book.getListDeals().get(i).getDiscount();
+//                    }
+//                }
+//                float spr = Float.parseFloat(book.getSalePrice());
+//                spr = spr - (spr * dc) / 100;
+//                book.setSalePrice(spr + "");
                 listBook.add(book);
             }
             return listBook;

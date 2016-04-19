@@ -30,16 +30,13 @@
                             </a>
                         </h1>
                         <h3><i><spring:message code="book.author"/>:</i>&nbsp; ${crBook.author}</h3>
-                        <c:if test="${crBook.originalPrice != '-1'}">
+                        <c:if test="${crBook.originalPrice != -1}">
                             <h4><i><spring:message code="book.originalprice"/>:</i>&nbsp; <strike><font color="green">${crBook.originalPrice} VNĐ</font></strike></h4>
                                 </c:if>
-                                <c:if test="${crBook.originalPrice eq '-1'}">
+                                <c:if test="${crBook.originalPrice eq -1}">
                             <h4><i><spring:message code="book.originalprice"/>:</i>&nbsp; <i><font color="green"><spring:message code="book.isupdating"/></font></i></h4>
                                 </c:if>
-                                <c:if test="${crBook.salePrice != '-1'}">
-                            <h3><i><spring:message code="book.saleprice"/>:</i>&nbsp; <font color="red">${crBook.salePrice} VNĐ</font></h3>
-                            </c:if>
-                            <c:if test="${crBook.salePrice eq '-1'}">
+                                <c:if test="${crBook.salePrice eq -1}">
                             <h3><i><spring:message code="book.status"/>:</i>&nbsp; <i><spring:message code="book.outofstock"/></i></h3>
                         </c:if>
                         <c:if test="${crBook.quantity > 0}">
@@ -60,7 +57,7 @@
                                 &nbsp;${crBook.set.name}
                             </a>
                         </h3>
-                        <c:if test="${crBook.salePrice != '-1'}">
+                        <c:if test="${crBook.salePrice != -1}">
                             <c:set var="ttdc" value ="0"/>
                             <c:forEach items="${crBook.listDeals}" var="km">
                                 <c:set var="ttdc" value ="${ttdc + km.discount}"/>
@@ -70,11 +67,12 @@
                                     </font>
                                 </h3>
                             </c:forEach>
-                        </c:if>
+                            <h3><i><spring:message code="book.saleprice"/>:</i>&nbsp; <font color="red">${crBook.salePrice - (crBook.salePrice * ttdc / 100)} VNĐ</font></h3>
+                            </c:if>
                     </section>
                     <section class="odop">
                         <h4><spring:message code="book.booknow"/></h4>
-                        <c:if test="${crBook.salePrice != '-1'}">
+                        <c:if test="${crBook.salePrice != -1}">
                             <c:if test="${!empty isIncart && isIncart == true}">
                                 <img src="${icon}/incart.png" alt="<spring:message code="book.isincart"/>">
                             </c:if>

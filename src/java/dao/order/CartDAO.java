@@ -6,9 +6,11 @@
 package dao.order;
 
 import dao.SingleDBConnection;
+import dao.book.DealsDAO;
 import entity.book.Book;
 import entity.book.BookSet;
 import entity.book.Category;
+import entity.book.Deals;
 import entity.order.BookOrder;
 import entity.order.Cart;
 import java.sql.Connection;
@@ -234,7 +236,9 @@ public class CartDAO {
                         sortLink = MyTool.convertString(rs1.getString(17));
                         Category ct = new Category(rs1.getInt(11), rs1.getString(17), rs1.getString(18), sortLink);
                         sortLink = MyTool.convertString(rs1.getString(3));
-                        Book book = new Book(rs1.getInt(1), rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14));
+                        int idB = rs1.getInt(1);
+                        ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idB);
+                        Book book = new Book(idB, rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14), listDeals);
                         listBookOrder.add(new BookOrder(rs2.getInt(1), rs2.getInt(2), rs2.getFloat(3), book));
                         totalPrice += rs2.getFloat(3);
                     }
@@ -321,7 +325,9 @@ public class CartDAO {
                     sortLink = MyTool.convertString(rs1.getString(17));
                     Category ct = new Category(rs1.getInt(11), rs1.getString(17), rs1.getString(18), sortLink);
                     sortLink = MyTool.convertString(rs1.getString(3));
-                    Book book = new Book(rs1.getInt(1), rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14));
+                    int idB = rs1.getInt(1);
+                    ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idB);
+                    Book book = new Book(idB, rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14), listDeals);
                     listBookOrder.add(new BookOrder(rs2.getInt(1), rs2.getInt(2), rs2.getFloat(3), book));
                     totalPrice += rs2.getFloat(3);
                 }

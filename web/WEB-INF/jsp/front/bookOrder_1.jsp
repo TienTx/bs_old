@@ -44,14 +44,20 @@
                             <td>${currentBookOrder.author}</td>
                             <td>${currentBookOrder.originalPrice}</td>
                             <td>
-                                <c:if test="${currentBookOrder.salePrice != '-1'}">
+                                <c:if test="${currentBookOrder.salePrice != -1}">
+                                    <c:set var="ttdc" value ="0"/>
                                     <c:forEach items="${currentBookOrder.listDeals}" var="km">
+                                        <c:set var="ttdc" value ="${ttdc + km.discount}"/>
                                         <font color="red">
                                         <spring:message code="book.discount"/> ${km.discount}%
                                         </font>
                                     </c:forEach>
+                                    <c:set var="ttprice" value ="${currentBookOrder.salePrice - (currentBookOrder.salePrice * ttdc / 100)}"/>
                                 </c:if>
-                                <input type="text" value="${currentBookOrder.salePrice}" readonly="" disabled="">
+                                <c:if test="${empty ttprice || ttprice == 0}">
+                                    <c:set var="ttdc" value ="${currentBookOrder.salePrice}"/>
+                                </c:if>
+                                <input type="text" value="${ttprice}" readonly="" disabled="">
                             </td>
                             <td class="quantity">
                                 <select>
@@ -65,7 +71,7 @@
                             <td>${currentBookOrder.category.name}</td>
                             <td>${currentBookOrder.set.name}</td>
                             <td>
-                                <input type="text" value="${currentBookOrder.salePrice}" readonly="" disabled="" id="ttprc">
+                                <input type="text" value="${ttprice}" readonly="" disabled="" id="ttprc">
                             </td>
                         </tr>
                     </table>
@@ -74,7 +80,9 @@
                         <li id="lincp"><spring:message code="order.ncardpoint"/></li>
                     </ul>
                     <section id="cp">
-                        <label id="condition"><spring:message code="order.condition"/></label>
+                        <c:if test="${ttprice < 100000}">
+                            <label id="condition"><spring:message code="order.condition"/></label>
+                        </c:if>
                         <label for="cc">Code: </label>
                         <input style="text-transform: uppercase;"
                                type="text" id="cc" class="code" name="code" pattern="([A-Za-z0-9]){6,6}">

@@ -18,8 +18,24 @@
         <section class="newbook">
             <c:forEach items="${listFiveBook}" var="rowsLFB">
                 <section>
-                    <a href="<%=request.getContextPath()%>/book/${rowsLFB.idBook}-${rowsLFB.sortLink}.html">
+                    <a class="abia" href="<%=request.getContextPath()%>/book/${rowsLFB.idBook}-${rowsLFB.sortLink}.html">
                         <img src="${image}/${rowsLFB.image}" alt="${rowsLFB.title}">
+                        <c:if test="${rowsLFB.listDeals != null && !empty rowsLFB.listDeals}">
+                            <section class="km">
+                                <img class="kmimg" src="${icon}/km.png" alt="km">
+                                <section class="kminfor">
+                                    <c:forEach items="${rowsLFB.listDeals}" var="eachKm">
+                                        <fieldset>
+                                            <legend>${eachKm.startDate} &divide; ${eachKm.endDate}</legend>
+                                            <c:if test="${eachKm.discount != 0}">
+                                                <p><spring:message code="book.discount"/> ${eachKm.discount}%</p>
+                                            </c:if>
+                                            <p>${eachKm.description}</p>
+                                        </fieldset>
+                                    </c:forEach>
+                                </section>
+                            </section>
+                        </c:if>
                     </a>
                     <a href="<%=request.getContextPath()%>/book/${rowsLFB.idBook}-${rowsLFB.sortLink}.html">
                         <h2>${rowsLFB.title}</h2>
@@ -27,16 +43,16 @@
                     <section class="dts">
                         <section>
                             <h3 class="author"><i><spring:message code="book.author"/>:</i>&nbsp; ${rowsLFB.author}</h3>
-                            <c:if test="${rowsLFB.originalPrice != -1}">
+                            <c:if test="${rowsLFB.originalPrice != '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i>&nbsp; <strike><font color="green">${rowsLFB.originalPrice} VNĐ</font></strike></h4>
                                     </c:if>
-                                    <c:if test="${rowsLFB.originalPrice eq -1}">
+                                    <c:if test="${rowsLFB.originalPrice eq '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i>&nbsp; <i><font color="green"><spring:message code="book.isupdating"/></font></i></h4>
                                     </c:if>
-                                    <c:if test="${rowsLFB.salePrice != -1}">
+                                    <c:if test="${rowsLFB.salePrice != '-1'}">
                                 <h3><i><spring:message code="book.saleprice"/>:</i>&nbsp; <font color="red">${rowsLFB.salePrice} VNĐ</font></h3>
                                 </c:if>
-                                <c:if test="${rowsLFB.salePrice eq -1}">
+                                <c:if test="${rowsLFB.salePrice eq '-1'}">
                                 <h3><i><spring:message code="book.status"/>:</i>&nbsp; <i><spring:message code="book.outofstock"/></i></h3>
                             </c:if>
                             <h3>
@@ -51,7 +67,7 @@
                                     &nbsp;${rowsLFB.set.name}
                                 </a>
                             </h3>
-                            <c:if test="${rowsLFB.salePrice != -1}">
+                            <c:if test="${rowsLFB.salePrice != '-1'}">
                                 <c:if test="${!empty listBookInCart}">
                                     <c:set var="inCart" value ="false"/>
                                     <c:forEach items="${listBookInCart}" var="rows1">
@@ -72,7 +88,7 @@
                                 <img class="hide" src="${icon}/incart.png" alt="<spring:message code="book.isincart"/>">
                                 <button class="odb" data-bind="${rowsLFB.idBook}#${crMbUserName}"><spring:message code="book.order"/></button>
                             </c:if>
-                            <section class="fb-like" data-href="${rowsLFB.idBook}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>
+                            <!--<section class="fb-like" data-href="" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>-->
                         </section>
                     </section>
                     <article class="article">
@@ -98,16 +114,16 @@
                                     <h3><i><spring:message code="book.author"/></i><br>${rbByWeek.author}</h3>
                                 </section>
                             </a>
-                            <c:if test="${rbByWeek.originalPrice != -1}">
+                            <c:if test="${rbByWeek.originalPrice != '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i> <strike><font color="green">${rbByWeek.originalPrice} VNĐ</font></strike></h4>
                                     </c:if>
-                                    <c:if test="${rbByWeek.originalPrice eq -1}">
+                                    <c:if test="${rbByWeek.originalPrice eq '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i> <i><font color="green"><spring:message code="book.isupdating"/></font></i></h4>
                                     </c:if>
-                                    <c:if test="${rbByWeek.salePrice != -1}">
+                                    <c:if test="${rbByWeek.salePrice != '-1'}">
                                 <h3><i><spring:message code="book.saleprice"/>:</i> <font color="red">${rbByWeek.salePrice} VNĐ</font></h3>
                                 </c:if>
-                                <c:if test="${rbByWeek.salePrice eq -1}">
+                                <c:if test="${rbByWeek.salePrice eq '-1'}">
                                 <h3><i><spring:message code="book.status"/>:</i> <i><spring:message code="book.outofstock"/></i></h3>
                             </c:if>
                             <h5>
@@ -123,7 +139,7 @@
                                 </a>
                             </h5>
                             <section class="option">
-                                <c:if test="${rbByWeek.salePrice != -1}">
+                                <c:if test="${rbByWeek.salePrice != '-1'}">
                                     <c:if test="${!empty listBookInCart}">
                                         <c:set var="inCart" value ="false"/>
                                         <c:forEach items="${listBookInCart}" var="rows1">
@@ -144,7 +160,23 @@
                                     <img class="hide" src="${icon}/incart.png" alt="<spring:message code="book.isincart"/>">
                                     <button class="odb" data-bind="${rbByWeek.idBook}#${crMbUserName}"><spring:message code="book.order"/></button>
                                 </c:if>
-                                <section class="fb-like" data-href="${rbByWeek.idBook}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>
+                                <c:if test="${rbByWeek.listDeals != null && !empty rbByWeek.listDeals}">
+                                    <section class="km">
+                                        <img class="kmimg" src="${icon}/km.png" alt="km">
+                                        <section class="kminfor">
+                                            <c:forEach items="${rbByWeek.listDeals}" var="eachKm">
+                                                <fieldset>
+                                                    <legend>${eachKm.startDate} &divide; ${eachKm.endDate}</legend>
+                                                    <c:if test="${eachKm.discount != 0}">
+                                                        <p><spring:message code="book.discount"/> ${eachKm.discount}%</p>
+                                                    </c:if>
+                                                    <p>${eachKm.description}</p>
+                                                </fieldset>
+                                            </c:forEach>
+                                        </section>
+                                    </section>
+                                </c:if>
+                                <!--<section class="fb-like" data-href="" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>-->
                             </section>
                         </section>
                     </c:forEach>
@@ -167,16 +199,16 @@
                                     <h3><i><spring:message code="book.author"/></i><br>${rbByMonth.author}</h3>
                                 </section>
                             </a>
-                            <c:if test="${rbByMonth.originalPrice != -1}">
+                            <c:if test="${rbByMonth.originalPrice != '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i> <strike><font color="green">${rbByMonth.originalPrice} VNĐ</font></strike></h4>
                                     </c:if>
-                                    <c:if test="${rbByMonth.originalPrice eq -1}">
+                                    <c:if test="${rbByMonth.originalPrice eq '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i> <i><font color="green"><spring:message code="book.isupdating"/></font></i></h4>
                                     </c:if>
-                                    <c:if test="${rbByMonth.salePrice != -1}">
+                                    <c:if test="${rbByMonth.salePrice != '-1'}">
                                 <h3><i><spring:message code="book.saleprice"/>:</i> <font color="red">${rbByMonth.salePrice} VNĐ</font></h3>
                                 </c:if>
-                                <c:if test="${rbByMonth.salePrice eq -1}">
+                                <c:if test="${rbByMonth.salePrice eq '-1'}">
                                 <h3><i><spring:message code="book.status"/>:</i> <i><spring:message code="book.outofstock"/></i></h3>
                             </c:if>
                             <h5>
@@ -192,7 +224,7 @@
                                 </a>
                             </h5>
                             <section class="option">
-                                <c:if test="${rbByMonth.salePrice != -1}">
+                                <c:if test="${rbByMonth.salePrice != '-1'}">
                                     <c:if test="${!empty listBookInCart}">
                                         <c:set var="inCart" value ="false"/>
                                         <c:forEach items="${listBookInCart}" var="rows1">
@@ -213,7 +245,23 @@
                                     <img class="hide" src="${icon}/incart.png" alt="<spring:message code="book.isincart"/>">
                                     <button class="odb" data-bind="${rbByMonth.idBook}#${crMbUserName}"><spring:message code="book.order"/></button>
                                 </c:if>
-                                <section class="fb-like" data-href="${rbByMonth.idBook}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>
+                                <c:if test="${rbByMonth.listDeals != null && !empty rbByMonth.listDeals}">
+                                    <section class="km">
+                                        <img class="kmimg" src="${icon}/km.png" alt="km">
+                                        <section class="kminfor">
+                                            <c:forEach items="${rbByMonth.listDeals}" var="eachKm">
+                                                <fieldset>
+                                                    <legend>${eachKm.startDate} &divide; ${eachKm.endDate}</legend>
+                                                    <c:if test="${eachKm.discount != 0}">
+                                                        <p><spring:message code="book.discount"/> ${eachKm.discount}%</p>
+                                                    </c:if>
+                                                    <p>${eachKm.description}</p>
+                                                </fieldset>
+                                            </c:forEach>
+                                        </section>
+                                    </section>
+                                </c:if>
+                                <!--<section class="fb-like" data-href="" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>-->
                             </section>
                         </section>
                     </c:forEach>
@@ -236,16 +284,16 @@
                                     <h3><i><spring:message code="book.author"/></i><br>${rbByYear.author}</h3>
                                 </section>
                             </a>
-                            <c:if test="${rbByYear.originalPrice != -1}">
+                            <c:if test="${rbByYear.originalPrice != '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i> <strike><font color="green">${rbByYear.originalPrice} VNĐ</font></strike></h4>
                                     </c:if>
-                                    <c:if test="${rbByYear.originalPrice eq -1}">
+                                    <c:if test="${rbByYear.originalPrice eq '-1'}">
                                 <h4><i><spring:message code="book.originalprice"/>:</i> <i><font color="green"><spring:message code="book.isupdating"/></font></i></h4>
                                     </c:if>
-                                    <c:if test="${rbByYear.salePrice != -1}">
+                                    <c:if test="${rbByYear.salePrice != '-1'}">
                                 <h3><i><spring:message code="book.saleprice"/>:</i> <font color="red">${rbByYear.salePrice} VNĐ</font></h3>
                                 </c:if>
-                                <c:if test="${rbByYear.salePrice eq -1}">
+                                <c:if test="${rbByYear.salePrice eq '-1'}">
                                 <h3><i><spring:message code="book.status"/>:</i> <i><spring:message code="book.outofstock"/></i></h3>
                             </c:if>
                             <h5>
@@ -261,7 +309,7 @@
                                 </a>
                             </h5>
                             <section class="option">
-                                <c:if test="${rbByYear.salePrice != -1}">
+                                <c:if test="${rbByYear.salePrice != '-1'}">
                                     <c:if test="${!empty listBookInCart}">
                                         <c:set var="inCart" value ="false"/>
                                         <c:forEach items="${listBookInCart}" var="rows1">
@@ -282,7 +330,23 @@
                                     <img class="hide" src="${icon}/incart.png" alt="<spring:message code="book.isincart"/>">
                                     <button class="odb" data-bind="${rbByYear.idBook}#${crMbUserName}"><spring:message code="book.order"/></button>
                                 </c:if>
-                                <section class="fb-like" data-href="${rbByYear.idBook}" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>
+                                <c:if test="${rbByYear.listDeals != null && !empty rbByYear.listDeals}">
+                                    <section class="km">
+                                        <img class="kmimg" src="${icon}/km.png" alt="km">
+                                        <section class="kminfor">
+                                            <c:forEach items="${rbByYear.listDeals}" var="eachKm">
+                                                <fieldset>
+                                                    <legend>${eachKm.startDate} &divide; ${eachKm.endDate}</legend>
+                                                    <c:if test="${eachKm.discount != 0}">
+                                                        <p><spring:message code="book.discount"/> ${eachKm.discount}%</p>
+                                                    </c:if>
+                                                    <p>${eachKm.description}</p>
+                                                </fieldset>
+                                            </c:forEach>
+                                        </section>
+                                    </section>
+                                </c:if>
+                                <!--<section class="fb-like" data-href="" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></section>-->
                             </section>
                         </section>
                     </c:forEach>

@@ -256,65 +256,6 @@ public class OrderCtr {
     }
 
     //////////////////////////////////////
-//    @RequestMapping(value = "cartorder", method = RequestMethod.POST)
-//    public @ResponseBody
-//    String bookOrder(HttpSession session,
-//            @RequestParam("email") String email,
-//            @RequestParam("phoneNumber") String phoneNumber,
-//            @RequestParam("number") String number,
-//            @RequestParam("lane") String lane,
-//            @RequestParam("street") String street,
-//            @RequestParam("ward") String ward,
-//            @RequestParam("district") String district,
-//            @RequestParam("city") String city,
-//            @RequestParam("country") String country,
-//            @RequestParam("code") String code
-//    ) {
-//        String res = "fail";
-//        Cart cart = (Cart) session.getAttribute("cart");
-//        if (cart == null) {
-//            return res;
-//        }
-//        if (number != null && number.length() >= 1 && number.length() <= 10
-//                && email != null && email.length() <= 30
-//                && phoneNumber != null && phoneNumber.length() >= 2 && phoneNumber.length() <= 12
-//                && lane != null && lane.length() >= 1 && lane.length() <= 10
-//                && street != null && street.length() >= 6 && street.length() <= 20
-//                && ward != null && ward.length() >= 6 && ward.length() <= 20
-//                && district != null && district.length() >= 6 && district.length() <= 20
-//                && city != null && city.length() >= 6 && city.length() <= 20) {
-//            PersonDAOAbstractFactory customerDAOFactory = PersonDAOFactoryProducer.getDAOFactory("customerDAO");
-//            try {
-//                Customer cus = customerDAOFactory.getCustomerDAO("customerNotMemberDAO").addAndGetCustomer(phoneNumber, email);
-//                ShippingInfor shippingAdded = new ShippingInforDAO().addMbShippingInfor(number, lane, street, ward, district, city, country, cus);
-//                if (shippingAdded != null) {
-//                    int idCart = new CartDAO().addCart(cart);
-//                    cart.setIdCart(idCart);
-//                    Payment paymentAdded = new PaymentDAO().addPayment(cart, false);
-//                    if (paymentAdded != null) {
-//                        try {
-//                            Calendar c = Calendar.getInstance();
-//                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//                            String crDate = sdf.format(c.getTime());
-//                            Date date = new Date(sdf.parse(crDate).getTime());
-//                            Order order = new Order(paymentAdded, shippingAdded, date, "Đã gửi");
-//                            boolean orderAdded = new OrderDAO().addOrder(order);
-//                            if (orderAdded) {
-//                                res = "OK";
-//                                session.setAttribute("currentCartOrder", cart);
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return res;
-//    }
-    //////////////////////////////////////
     @RequestMapping(value = "cartorder", method = RequestMethod.POST)
     public @ResponseBody
     String cartOrder(HttpSession session,
@@ -457,6 +398,15 @@ public class OrderCtr {
     private Cart doCustomerBookOrderCard(String q, Book book) {
         try {
             int qtty = Integer.parseInt(q);
+//            int dc = 0;
+//            if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+//                for (int i = 0; i < book.getListDeals().size(); i++) {
+//                    dc += book.getListDeals().get(i).getDiscount();
+//                }
+//            }
+//            float spr = Float.parseFloat(book.getSalePrice());
+//            spr = spr - (spr * dc) / 100;
+//            float totalPr = (float) qtty * spr;
             float totalPr = (float) qtty * Float.parseFloat(book.getSalePrice());
             BookOrder bod = new BookOrder(qtty, totalPr, book);
             ArrayList<BookOrder> listBod = new ArrayList<>();
@@ -655,6 +605,15 @@ public class OrderCtr {
     private Cart doMemberBookOrderCart(String q, Book book) {
         try {
             int qtty = Integer.parseInt(q);
+//            int dc = 0;
+//            if (book.getListDeals() != null && book.getListDeals().size() > 0) {
+//                for (int i = 0; i < book.getListDeals().size(); i++) {
+//                    dc += book.getListDeals().get(i).getDiscount();
+//                }
+//            }
+//            float spr = Float.parseFloat(book.getSalePrice());
+//            spr = spr - (spr * dc) / 100;
+//            float totalPr = (float) qtty * spr;
             float totalPr = (float) qtty * Float.parseFloat(book.getSalePrice());
             BookOrder bod = new BookOrder(qtty, totalPr, book);
             ArrayList<BookOrder> listBod = new ArrayList<>();

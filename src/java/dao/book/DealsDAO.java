@@ -248,4 +248,73 @@ public class DealsDAO {
         }
         return false;
     }
+
+    public ArrayList<Integer> getListIdBookInBookDeals() {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT tblBookDeals.idBook FROM tblBookDeals;";
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            ps = this.conn.prepareStatement(sqlSelect);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getInt(1));
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Deals> getListDealsByBookId(int idBook) {
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlSelect = "SELECT tblDeals.idDeals, "
+                + "tblDeals.code, "
+                + "tblDeals.description, "
+                + "tblDeals.discount, "
+                + "tblDeals.startDate, "
+                + "tblDeals.endDate, "
+                + "tblDeals.status "
+                + "FROM tblDeals JOIN tblBookDeals ON "
+                + "tblDeals.idDeals = tblBookDeals.idDeals "
+                + "WHERE tblDeals.status = 1 AND "
+                + "tblBookDeals.idBook = ?;";
+        ArrayList<Deals> list = new ArrayList<>();
+        try {
+            ps = this.conn.prepareStatement(sqlSelect);
+            ps.setInt(1, idBook);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Deals(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getDate(5), rs.getDate(6), rs.getInt(7)));
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

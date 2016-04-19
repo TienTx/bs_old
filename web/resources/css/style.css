@@ -929,6 +929,7 @@ aside a:hover{
     width: 184px;
     float: left;
     position: relative;
+    min-height: 62px;
 }
 .book .option button, .dts button, .odop button{
     width: 120px;
@@ -950,6 +951,77 @@ aside a:hover{
 }
 .book .option button:hover, .dts button:hover, .odop button:hover{
     box-shadow: 0px 0px 5px #A91806 inset;
+}
+/*.abia img{
+    position: relative;
+}*/
+.abia .km .kmimg{
+    left: 145px;
+    bottom: 0;
+    width: 45px;
+    height: 50px;
+}
+.option .km .kmimg{
+    right: -5px;
+    bottom: 0;
+    width: 35px;
+    height: 40px;
+}
+.abia .km .kmimg:hover + .kminfor,
+.option .km .kmimg:hover + .kminfor{
+    display: block;
+}
+.km .kminfor{
+    display: none;
+    position: absolute;
+    z-index: 100;
+    width: 180px;
+    min-height: 200px;
+    bottom: 0;
+    transition: 2s;
+/*     right: 0; */
+}
+.abia .km .kminfor{
+    left: 190px;
+    background: #EE8942;
+}
+.option .km .kminfor{
+    right: -184px;
+    background: #EECF8E;
+}
+.kminfor{
+    padding: 0 2px;
+    border-radius: 5px 5px 5px 0;
+}
+.option .km .kminfor fieldset, .option .kminfor fieldset legend{
+    width: 100%;
+    color: #000 !important;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0px 0px 1px #FFF;
+}
+.abia .km .kminfor fieldset, .abia .kminfor fieldset legend{
+    width: 100%;
+    color: #FFF !important;
+    text-align: center;
+    margin-bottom: 10px;
+    text-shadow: 0px 0px 1px #000;
+}
+.kminfor fieldset legend{
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+}
+.kminfor fieldset p:last-child{
+    text-align: justify;
+    width: 170px;
+    padding: 0 5px;
+}
+.option .km .kmimg, .abia .km .kmimg{
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
 }
 .book .option img{
     width: 30px;
@@ -1709,8 +1781,8 @@ footer section.insidefooter{
     background: #67A011;
     margin: 0;
     padding: 20px 0 0 0;
-/*    border-bottom: #FFF thin solid;
-    box-sizing: border-box;*/
+    /*    border-bottom: #FFF thin solid;
+        box-sizing: border-box;*/
 }
 .rightaside a{
     width: 100%;
@@ -1753,7 +1825,7 @@ footer section.insidefooter{
     background: #FFF;
 }
 .rightaside .mninfor, .rightaside .mninfor legend{
-/*     background: #FFF; */
+    /*     background: #FFF; */
     text-align: center;
     color: #FFF;
 }
@@ -1783,8 +1855,8 @@ footer section.insidefooter{
 .mninfor a:hover, .mninfor button:hover, .rightaside a:hover{
     box-shadow: 0px -1px 2px #FFF inset;
     color: #FFF;
-/*    box-shadow: 0px 1px 2px gray inset;
-    color: #000;*/
+    /*    box-shadow: 0px 1px 2px gray inset;
+        color: #000;*/
 }
 .adInside .fsdata{
     float: right;
