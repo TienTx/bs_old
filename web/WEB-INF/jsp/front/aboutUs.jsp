@@ -11,6 +11,7 @@
     <section class="content">
         <fieldset>
             <legend><spring:message code="nav.storeinfor"/></legend>
+            <center><spring:message code="order.csdt"/></center>
         </fieldset>
     </section>
     <%@include file="inc/rightAside.jsp" %>
