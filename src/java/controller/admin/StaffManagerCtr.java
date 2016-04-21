@@ -5,6 +5,9 @@
  */
 package controller.admin;
 
+import Service.ServiceNXBDaNang;
+import Service.ServiceNXBHaNoi;
+import controller.LoadDefaultData;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +33,11 @@ import entity.book.Book;
 import entity.book.BookSet;
 import entity.book.Category;
 import entity.person.employee.Employee;
+import java.net.URL;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import tool.MyTool;
 
 /**
@@ -51,34 +61,175 @@ public class StaffManagerCtr {
             @RequestParam(value = "ct", defaultValue = "") String ct,
             @RequestParam(value = "bs", defaultValue = "") String bs)
             throws IOException {
-        Employee ee = (Employee) session.getAttribute("emLogged");
-        if (ee == null || !ee.geteType().equals("staffManager")) {
-            response.sendRedirect(request.getContextPath() + "/home.html");
-        } else {
-            model = new ModelAndView("/back/staffManager");
-            model.addObject("title", "Staff Manager");
-            try {
-                ArrayList<Book> listBook = new ArrayList<Book>();
-                if (ct.equals("") && bs.equals("")) {
-                    listBook = doSearch(op, key);
-                } else if (ct.equals("")) {
-                    listBook = doSearchBookbyBookSet(bs);
-                } else {
-                    listBook = doSearchBookbyCategory(ct);
-                }
-                ArrayList listCandBS = getAllCateogryAndBookSet();
-
-                int numProduct = 9;
-                ArrayList<Integer> pages = myTool.getPages(listBook.size(), pageNum, numProduct);
-                model.addObject("pages", pages);
-                model.addObject("listBook", listBook);
-                model.addObject("listCandBS", listCandBS);
-            } catch (Exception e) {
-                e.getStackTrace();
+//        Employee ee = (Employee) session.getAttribute("emLogged");
+//        if (ee == null || !ee.geteType().equals("staffManager")) {
+//            response.sendRedirect(request.getContextPath() + "/home.html");
+//        } else {
+        model = new ModelAndView("/back/staffManager");
+        model.addObject("title", "Staff Manager");
+        try {
+            ArrayList<Book> listBook = new ArrayList<Book>();
+            if (ct.equals("") && bs.equals("")) {
+                listBook = doSearch(op, key);
+            } else if (ct.equals("")) {
+                listBook = doSearchBookbyBookSet(bs);
+            } else {
+                listBook = doSearchBookbyCategory(ct);
             }
-            return model;
+            ArrayList listCandBS = getAllCateogryAndBookSet();
+
+            int numProduct = 9;
+            ArrayList<Integer> pages = myTool.getPages(listBook.size(), pageNum, numProduct);
+            model.addObject("pages", pages);
+            model.addObject("listBook", listBook);
+            model.addObject("listCandBS", listCandBS);
+        } catch (Exception e) {
+            e.getStackTrace();
         }
-        return null;
+        return model;
+//        }
+//        return null;
+    }
+
+    @RequestMapping(value = "searchBookDistributor", method = RequestMethod.GET)
+    public ModelAndView searchBookDistributor(ModelAndView model,
+            HttpServletRequest request, HttpServletResponse response,
+            HttpSession session,
+            @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+            @RequestParam(value = "key", defaultValue = "") String key,
+            @RequestParam(value = "nxb", defaultValue = "") String nxb
+    ) throws IOException {
+        Employee ee = (Employee) session.getAttribute("emLogged");
+//        if (ee == null || !ee.geteType().equals("staffManager")) {
+//            response.sendRedirect(request.getContextPath() + "/home.html");
+//        } else {
+        model = new ModelAndView("/back/searchBookDistributor");
+        model.addObject("title", "Staff Manager");
+        try {
+            ArrayList<NXBHaNoi.Book> listBookNXBHaNoi = new ArrayList<NXBHaNoi.Book>();
+            listBookNXBHaNoi = new ServiceNXBHaNoi().sachCungCap();
+            ArrayList<NXBDaNang.Book> listBookNXBDaNang = new ArrayList<NXBDaNang.Book>();
+            listBookNXBDaNang = new ServiceNXBDaNang().sachCungCap();
+            ArrayList listBook = new ArrayList();
+            if (nxb.equals("")) {
+            } else if (nxb.equals("nha-xuat-ban-ha-noi")) {
+                listBook = listBookNXBHaNoi;
+            } else {
+                listBook = listBookNXBDaNang;
+            }
+            if (key.equals("")) {
+            } else {
+                for (int i = 0; i < listBookNXBDaNang.size(); i++) {
+                    if (listBookNXBDaNang.get(i).getTitle().compareToIgnoreCase(key) > 0) {
+                        listBook.add(listBookNXBDaNang.get(i));
+                    }
+                }
+                for (int i = 0; i < listBookNXBHaNoi.size(); i++) {
+                    if (listBookNXBHaNoi.get(i).getTitle().compareToIgnoreCase(key) > 0) {
+                        listBook.add(listBookNXBHaNoi.get(i));
+                    }
+                }
+            }
+            int numProduct = 9;
+            ArrayList<Integer> pages = myTool.getPages(listBook.size(), pageNum, numProduct);
+            model.addObject("pages", pages);
+            model.addObject("listBook", listBook);
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+        return model;
+//        }
+//        return null;
+    }
+
+    @RequestMapping(value = "{sortLink}/detailsBookDistributor", method = RequestMethod.GET)
+    public ModelAndView detailsBookDistributor(ModelMap mm, HttpSession session,
+            @RequestParam(value = "idBook") int idBook,
+            @PathVariable(value = "sortLink") String sortLink
+    ) {
+        if (sortLink.equals("nha-xuat-ban-da-nang")) {
+            ArrayList<NXBDaNang.Book> listBookNXBDaNang = new ServiceNXBDaNang().sachCungCap();
+            for (int i = 0; i < listBookNXBDaNang.size(); i++) {
+                if (listBookNXBDaNang.get(i).getIdBook() == idBook) {
+                    session.setAttribute("crBook", listBookNXBDaNang.get(i));
+                    break;
+                }
+            }
+        } else {
+            ArrayList<NXBHaNoi.Book> listBookNXBHaNoi = new ServiceNXBHaNoi().sachCungCap();
+            for (int i = 0; i < listBookNXBHaNoi.size(); i++) {
+                if (listBookNXBHaNoi.get(i).getIdBook() == idBook) {
+                    session.setAttribute("crBook", listBookNXBHaNoi.get(i));
+                    break;
+                }
+            }
+        }
+        return new ModelAndView("/back/detailsBookDistributor");
+    }
+
+    @RequestMapping(value = "/orderDistributor", method = RequestMethod.POST)
+    @ResponseBody
+    public String orderBook(HttpSession session,
+            @RequestParam(value = "quantity") int quantity,
+            @RequestParam(value = "phoneNumber") String phoneNumber,
+            @RequestParam(value = "nameBS") String nameBS,
+            @RequestParam(value = "adrShip") String adrShip
+    ) throws ParseException, IOException {
+        Object object = session.getAttribute("crBook");
+        if (object instanceof NXBHaNoi.Book) {
+            System.out.println("NXBHaNoi");
+            NXBHaNoi.Book bookHN = (NXBHaNoi.Book) object;
+            NXBHaNoi.Order order = new NXBHaNoi.Order();
+            order.setBook(bookHN);
+            NXBHaNoi.BookStore bookST = new NXBHaNoi.BookStore();
+            bookST.setName(nameBS);
+            bookST.setAddress(adrShip);
+            bookST.setPhoneNumber(phoneNumber);
+            order.setBookStore(bookST);
+            order.setQuantity(quantity);
+            if (new ServiceNXBHaNoi().datHang(order).equals("ok")) {
+                String urlImg = "http://" + bookHN.getImage();
+                String nameImg = new java.util.Date().getTime() + ".jpg";
+                String destinationFile = "F:\\FileCode\\NetBeans\\bookstore\\web\\resources\\image\\thumb\\" + nameImg;
+                saveImage(urlImg, destinationFile);
+
+                BookDAO bookDAO = new BookDAO();
+                Book book = new Book().convertBook(bookHN);
+                book.setQuantity(quantity);
+                book.setImage(nameImg);
+                System.out.println(bookDAO.addBook(book));
+
+                return "true";
+            } else {
+                return "false";
+            }
+        } else {
+            System.out.println("NXBDaNang");
+            NXBDaNang.Book bookDN = (NXBDaNang.Book) object;
+            NXBDaNang.Order order = new NXBDaNang.Order();
+            order.setBook(bookDN);
+            NXBDaNang.BookStore bookST = new NXBDaNang.BookStore();
+            bookST.setName(nameBS);
+            bookST.setAddress(adrShip);
+            bookST.setPhoneNumber(phoneNumber);
+            order.setBookStore(bookST);
+            order.setQuantity(quantity);
+            if (new ServiceNXBDaNang().datHang(order).equals("ok")) {
+                String urlImg = "http://" + bookDN.getImage();
+                String nameImg = new java.util.Date().getTime() + ".jpg";
+                String destinationFile = "F:\\FileCode\\NetBeans\\bookstore\\web\\resources\\image\\thumb\\" + nameImg;
+                saveImage(urlImg, destinationFile);
+
+                BookDAO bookDAO = new BookDAO();
+                Book book = new Book().convertBook(bookDN);
+                book.setQuantity(quantity);
+                book.setImage(nameImg);
+                System.out.println(bookDAO.addBook(book));
+                return "true";
+            } else {
+                return "false";
+            }
+        }
     }
 
     @SuppressWarnings({"rawtypes"})
@@ -113,7 +264,7 @@ public class StaffManagerCtr {
         if (ee == null || !ee.geteType().equals("staffManager")) {
             response.sendRedirect(request.getContextPath() + "/home.html");
         } else {
-            String urlForder = "H:\\Ky8\\MyBookStore\\web\\resources\\image\\thumb\\";
+            String urlForder = "F:\\FileCode\\NetBeans\\bookstore\\web\\resources\\image\\thumb\\";
             InputStream fis = null;
             OutputStream fos = null;
             try {
@@ -211,7 +362,7 @@ public class StaffManagerCtr {
         } else {
             if (file.getOriginalFilename().equals("")) {
             } else {
-                String urlForder = "H:\\Ky8\\MyBookStore\\web\\resources\\image\\thumb\\";
+                String urlForder = "F:\\FileCode\\NetBeans\\bookstore\\web\\resources\\image\\thumb\\";
                 InputStream fis = null;
                 OutputStream fos = null;
                 try {
@@ -279,7 +430,7 @@ public class StaffManagerCtr {
         ArrayList<Book> listBook = new ArrayList<Book>();
         BookDAO bookDAO = new BookDAO();
         if (op.equals("")) {
-            listBook = bookDAO.getAllBook();
+//        	listBook = bookDAO.getAllBook();
         } else if (op.equals("n1")) {
             listBook = bookDAO.getListOfBookByName(key);
         } else {
@@ -324,5 +475,20 @@ public class StaffManagerCtr {
         listCandBS.add(listC);
         listCandBS.add(listBS);
         return listCandBS;
+    }
+
+    public static void saveImage(String imageUrl, String destinationFile) throws IOException {
+        URL url = new URL(imageUrl);
+        InputStream is = url.openStream();
+        OutputStream os = new FileOutputStream(destinationFile);
+
+        int readBytes = 0;
+        byte[] buffer = new byte[8192];
+        while ((readBytes = is.read(buffer, 0, 8192)) != -1) {
+            os.write(buffer, 0, readBytes);
+        }
+
+        is.close();
+        os.close();
     }
 }

@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tool.MyTool;
 
 /**
@@ -1131,7 +1133,125 @@ public class BookDAO {
         return null;
     }
 
+    public boolean addCategory(Category cat) {
+        String sql = "INSERT INTO tblCategory(name, description) VALUES(?,?)";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, cat.getName());
+            ps.setString(2, cat.getDescription());
+            if (ps.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean addBookSet(BookSet bSet) {
+        String sql = "INSERT INTO tblBookSet(name, description) VALUES(?,?)";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, bSet.getName());
+            ps.setString(2, bSet.getDescription());
+            if (ps.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public Category getCategorybyName(String name) {
+        String sql = "SELECT * FROM tblCategory WHERE name=?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            Category cat = null;
+            if (rs.next()) {
+                cat = new Category();
+                cat.setIdCategory(rs.getInt("idCategory"));
+                cat.setName(rs.getString("name"));
+                cat.setDescription(rs.getString("description"));
+            }
+            return cat;
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public BookSet getBookSetbyName(String name) {
+        String sql = "SELECT * FROM tblBookSet WHERE name=?";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, name);
+            rs = ps.executeQuery();
+            BookSet bSet = null;
+            if (rs.next()) {
+                bSet = new BookSet();
+                bSet.setIdBookSet(rs.getInt("idBookSet"));
+                bSet.setName(rs.getString("name"));
+                bSet.setDescription(rs.getString("description"));
+            }
+            return bSet;
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public boolean addBook(Book book) {
+        Category cat = getCategorybyName(book.getCategory().getName());
+        int idCategory = 0;
+        int idBookSet = 0;
+        if (cat != null) {
+            idCategory = cat.getIdCategory();
+        } else {
+            addCategory(book.getCategory());
+            idCategory = getIdLastInsert();
+        }
+        BookSet bSet = getBookSetbyName(book.getSet().getName());
+        if (bSet != null) {
+            idBookSet = bSet.getIdBookSet();
+            System.out.println("NOT NULL");
+        } else {
+            System.out.println("NULL");
+            addBookSet(book.getSet());
+            idBookSet = getIdLastInsert();
+        }
+        System.out.println(idCategory);
+        System.out.println(idBookSet);
         String sql = "INSERT INTO tblBook"
                 + "(image, title, author, publisher, publishYear, "
                 + "description, originalPrice, salePrice, quantity, idCategory, idBookSet)"
@@ -1148,10 +1268,10 @@ public class BookDAO {
             ps.setString(7, book.getOriginalPrice());
             ps.setString(8, book.getSalePrice());
             ps.setInt(9, book.getQuantity());
-            ps.setInt(10, book.getCategory().getIdCategory());
-            ps.setInt(11, book.getSet().getIdBookSet());
+            ps.setInt(10, idCategory);
+            ps.setInt(11, idBookSet);
             int n = ps.executeUpdate();
-            return (n == 1);
+            if(n==1) return true;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -1221,5 +1341,33 @@ public class BookDAO {
             }
         }
         return false;
+    }
+
+    public Integer getIdLastInsert() {
+        int idLastInsert = 0;
+        String sql = "SELECT LAST_INSERT_ID()";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                idLastInsert = rs.getInt(1);
+            }
+            return idLastInsert;
+        } catch (SQLException e) { e.printStackTrace();
+        } finally {
+            try {
+                if(ps != null){
+                    ps.close();
+                }
+                if(rs != null){
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

@@ -11,11 +11,9 @@
 		<spring:url value="/resources/js/ad.js" var="adscript" />
 		<spring:url value="/resources/js/html5.js" var="html5" />
 		<spring:url value="/resources/js/bootstrap.min.js" var="bootstrapjs" />
-		<spring:url value="/resources/js/nicEdit.js" var="nicEdit" />
 		<script type="text/javascript" src="${jquery}"></script>
 		<script type="text/javascript" src="${adscript}"></script>
 		<script type="text/javascript" src="${html5}"></script>
 		<script type="text/javascript" src="${bootstrapjs}"></script>
-		<script type="text/javascript" src="${nicEdit}"></script>
     </body>
 </html>

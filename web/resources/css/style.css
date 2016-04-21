@@ -177,6 +177,9 @@ aside{
 .hide{
     display: none;
 }
+.hide1{
+    /*display: none;*/
+}
 .wrapper{
     background-color: rgba(0,0,0,0.2);
     min-width: 1020px;
@@ -194,7 +197,7 @@ aside{
         min-height: 1400px;
     }
     .bookdetails{
-        min-height: 700px;
+        min-height: 500px;
     }
     /*    .adInside{
             width: 100%;
@@ -979,7 +982,7 @@ aside a:hover{
     color: #6161EF;
 }
 /****************** book details style *******************/
-.bookdetails{
+.content .bookdetails{
     width: 760px;
     float:left;
     position: relative;

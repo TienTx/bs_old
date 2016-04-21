@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://Services/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://Services/">
+
+<xs:element name="datHang" type="tns:datHang"/>
+
+<xs:element name="datHangResponse" type="tns:datHangResponse"/>
+
+<xs:element name="sachCungCap" type="tns:sachCungCap"/>
+
+<xs:element name="sachCungCapResponse" type="tns:sachCungCapResponse"/>
+
+<xs:complexType name="sachCungCap">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="sachCungCapResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:book" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="book">
+<xs:sequence>
+<xs:element name="author" type="xs:string" minOccurs="0"/>
+<xs:element name="bookSet" type="tns:bookSet" minOccurs="0"/>
+<xs:element name="category" type="tns:category" minOccurs="0"/>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="idBook" type="xs:int"/>
+<xs:element name="image" type="xs:string" minOccurs="0"/>
+<xs:element name="originalPrice" type="xs:float"/>
+<xs:element name="publishYear" type="xs:int"/>
+<xs:element name="publisher" type="xs:string" minOccurs="0"/>
+<xs:element name="quantity" type="xs:int"/>
+<xs:element name="salePrice" type="xs:float"/>
+<xs:element name="title" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bookSet">
+<xs:sequence>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="idBookSet" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="category">
+<xs:sequence>
+<xs:element name="description" type="xs:string" minOccurs="0"/>
+<xs:element name="idCategory" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="datHang">
+<xs:sequence>
+<xs:element name="arg0" type="tns:order" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="order">
+<xs:sequence>
+<xs:element name="book" type="tns:book" minOccurs="0"/>
+<xs:element name="bookStore" type="tns:bookStore" minOccurs="0"/>
+<xs:element name="dateOrder" type="tns:date" minOccurs="0"/>
+<xs:element name="idOrder" type="xs:int"/>
+<xs:element name="price" type="xs:float"/>
+<xs:element name="quantity" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="bookStore">
+<xs:sequence>
+<xs:element name="address" type="xs:string" minOccurs="0"/>
+<xs:element name="idBookStore" type="xs:int"/>
+<xs:element name="name" type="xs:string" minOccurs="0"/>
+<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="date">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="datHangResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

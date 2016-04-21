@@ -13,6 +13,9 @@
 <section class="msg">${msg }</section>
 <a href="${pageContext.request.contextPath }/staffmanager/addBook"
    class="addBook"> Thêm sách</a>
+<a href="${pageContext.request.contextPath }/staffmanager/searchBookDistributor">
+	Đặt sách từ nhà cung cấp
+</a>
 
 <section class="search">
     <form method="get" action="" name="adsearchFrm" id="adsearchFrm">

@@ -6,6 +6,7 @@
 package entity.book;
 
 import java.io.Serializable;
+import tool.MyTool;
 
 /**
  *
@@ -185,5 +186,66 @@ public class Book implements Serializable {
         this.sortLink = sortLink;
         this.votes = votes;
         this.ratePoint = ratePoint;
+    }
+    public Book convertBook(Object book){
+        if(book instanceof NXBHaNoi.Book){
+            NXBHaNoi.Book bookHN = (NXBHaNoi.Book) book;
+            Book bookConvert = new Book();
+            bookConvert.setIdBook(bookHN.getIdBook());
+            bookConvert.setImage(bookHN.getImage());
+            bookConvert.setTitle(bookHN.getTitle());
+            bookConvert.setAuthor(bookHN.getAuthor());
+            bookConvert.setPublisher(bookHN.getPublisher());
+            bookConvert.setPublishYear(bookHN.getPublishYear() + "");
+            bookConvert.setDescription(bookHN.getDescription());
+            bookConvert.setOriginalPrice(bookHN.getOriginalPrice() + "");
+            bookConvert.setSalePrice(bookHN.getSalePrice() + "");
+            bookConvert.setQuantity(bookHN.getQuantity());
+            bookConvert.setSortLink(new MyTool().convertString(bookHN.getPublisher()));
+            
+            Category category = new Category();
+            NXBHaNoi.Category catHN = bookHN.getCategory();
+            category.setIdCategory(catHN.getIdCategory());
+            category.setName(catHN.getName());
+            category.setDescription(catHN.getDescription());
+            bookConvert.setCategory(category);
+            
+            BookSet bookSet=new BookSet();
+            NXBHaNoi.BookSet bsHN = bookHN.getBookSet();
+            bookSet.setIdBookSet(bsHN.getIdBookSet());
+            bookSet.setName(bsHN.getName());
+            bookSet.setDescription(bsHN.getDescription());
+            bookConvert.setSet(bookSet);
+            return bookConvert;
+        }else{
+            NXBDaNang.Book bookDN = (NXBDaNang.Book) book;
+            Book bookConvert = new Book();
+            bookConvert.setIdBook(bookDN.getIdBook());
+            bookConvert.setImage(bookDN.getImage());
+            bookConvert.setTitle(bookDN.getTitle());
+            bookConvert.setAuthor(bookDN.getAuthor());
+            bookConvert.setPublisher(bookDN.getPublisher());
+            bookConvert.setPublishYear(bookDN.getPublishYear() + "");
+            bookConvert.setDescription(bookDN.getDescription());
+            bookConvert.setOriginalPrice(bookDN.getOriginalPrice() + "");
+            bookConvert.setSalePrice(bookDN.getSalePrice() + "");
+            bookConvert.setQuantity(bookDN.getQuantity());
+            bookConvert.setSortLink(new MyTool().convertString(bookDN.getPublisher()));
+            
+            Category category = new Category();
+            NXBDaNang.Category catDN = bookDN.getCategory();
+            category.setIdCategory(catDN.getIdCategory());
+            category.setName(catDN.getName());
+            category.setDescription(catDN.getDescription());
+            bookConvert.setCategory(category);
+            
+            BookSet bookSet=new BookSet();
+            NXBDaNang.BookSet bsDN = bookDN.getBookSet();
+            bookSet.setIdBookSet(bsDN.getIdBookSet());
+            bookSet.setName(bsDN.getName());
+            bookSet.setDescription(bsDN.getDescription());
+            bookConvert.setSet(bookSet);
+            return bookConvert;
+        }
     }
 }

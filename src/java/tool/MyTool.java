@@ -300,7 +300,7 @@ public class MyTool {
     ) {
         try {
             Cookie cookie = new Cookie(cookieName, URLEncoder.encode(data, "UTF-8"));
-            cookie.setMaxAge(86400000);
+            cookie.setMaxAge(10);
             response.addCookie(cookie);
         } catch (Exception e) {
             e.printStackTrace();

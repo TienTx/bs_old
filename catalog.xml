@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://anhquanpc:8080/NhaXuanBanHaNoi/ServiceSachService?wsdl" uri="src/conf/xml-resources/web-service-references/ServiceSachService/wsdl/anhquanpc_8080/NhaXuanBanHaNoi/ServiceSachService.wsdl"/>
+    <system systemId="http://anhquanpc:8080/NhaXuanBanHaNoi/ServiceSachService?xsd=1" uri="src/conf/xml-resources/web-service-references/ServiceSachService/wsdl/anhquanpc_8080/NhaXuanBanHaNoi/ServiceSachService.xsd_1.xsd"/>
+    <system systemId="http://anhquanpc:8080/NhaXuanBanDaNang/ServiceSachService?wsdl" uri="src/conf/xml-resources/web-service-references/ServiceSachService_1/wsdl/anhquanpc_8080/NhaXuanBanDaNang/ServiceSachService.wsdl"/>
+    <system systemId="http://anhquanpc:8080/NhaXuanBanDaNang/ServiceSachService?xsd=1" uri="src/conf/xml-resources/web-service-references/ServiceSachService_1/wsdl/anhquanpc_8080/NhaXuanBanDaNang/ServiceSachService.xsd_1.xsd"/>
+</catalog>

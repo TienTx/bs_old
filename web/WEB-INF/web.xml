@@ -32,7 +32,8 @@
     </filter-mapping>
     <session-config>
         <session-timeout>
-            60
+            <!--60-->
+            1
         </session-timeout>
     </session-config>
     

@@ -32,14 +32,15 @@ public class HomeCtr {
             HttpServletRequest request, HttpServletResponse response) {
         model = new ModelAndView("/front/home");
         LoadDefaultData.getAndSetCookieAndScopeOfCategoryAndBookSet(request, response, model);
-        ArrayList<Book> listFiveBook = (ArrayList<Book>) session.getAttribute("ssListFiveBook");
-        if (listFiveBook == null || listFiveBook.size() < 5) {
+        ArrayList<Book> listFiveBook = new ArrayList<>();
+//        ArrayList<Book> listFiveBook = (ArrayList<Book>) session.getAttribute("ssListFiveBook");
+//        if (listFiveBook == null || listFiveBook.size() < 5) {
             try {
                 listFiveBook = getFiveNewBookInDb();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+//        }
         if (listFiveBook != null) {
             getAndSetModelListBookInDb(model, session);
             MyTool.setAndUpdateSessionBook(session, "ssListBook", listFiveBook, null);
