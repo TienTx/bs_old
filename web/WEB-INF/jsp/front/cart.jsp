@@ -91,14 +91,40 @@
                     </table>
                 </form>
                 <form class="hide odcart" id="odcart" method="post" action="<%=request.getContextPath()%>/order.html">
-                    <h2><spring:message code="user.addressshipping"/></h2>
-                    <input required="" type="email" name="email" placeholder="<spring:message code="user.email"/>" 
-                           value="${email}"
-                           maxlength="30"
-                           pattern="^([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)$">
-                    <input required="" type="text" name="phoneNumber" placeholder="<spring:message code="user.phone"/>" 
-                           value="${phoneNumber}"
-                           pattern="((\+84)|(0))[1-9]\d{2,9}">
+                    <ul>
+                        <li id="licp"><spring:message code="order.cardpoint"/></li>
+                        <li id="lincp"><spring:message code="order.ncardpoint"/></li>
+                    </ul>
+                    <section id="cp">
+                        <c:if test="${crTotalPrice < 100000}">
+                            <label id="condition"><spring:message code="order.condition"/></label>
+                        </c:if>
+                        <label for="cc">Code: </label>
+                        <input style="text-transform: uppercase;" 
+                               type="text" id="cc" class="code" name="code" pattern="([A-Za-z0-9]){6,6}">
+                        <span id="right" class="hide">&nbsp;</span>
+                        <span id="wrong" class="hide">&nbsp;</span>
+                        <section id="codeif">
+                            <p><spring:message code="order.crpoint"/>&nbsp;<i id="crpoint">0</i>&nbsp;&nbsp;-&nbsp;<spring:message code="order.applypoint"/>&nbsp;<i id="applypoint">0</i></p>
+                            <small class="hide"><spring:message code="order.notexistcardpoint"/></small>
+                        </section>
+                        <fieldset>
+                            <legend><spring:message code="user.addressshipping"/></legend>
+                            <input type="text" id="cpemail1" name="email1" class="hide" >
+                            <input type="text" id="cpphone1" name="phoneNumber1" class="hide" >
+                        </fieldset>
+                    </section>
+                    <fieldset id="ncp">
+                        <legend><spring:message code="user.addressshipping"/></legend>
+                        <center><small><spring:message code="order.note"/></small></center>
+                        <input type="email" id="cpemail2" name="email2" placeholder="<spring:message code="user.email"/>" 
+                               value="${email}"
+                               maxlength="30"
+                               pattern="^([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)$">
+                        <input type="text" id="cpphone2" name="phoneNumber2" placeholder="<spring:message code="user.phone"/>" 
+                               value="${phoneNumber}"
+                               pattern="((\+84)|(0))[1-9]\d{2,9}">
+                    </fieldset>
                     <input required="" type="text" name="number" placeholder="<spring:message code="user.housenumber"/>"
                            pattern="\d{1,10}">
                     <input required="" type="text" name="lane" placeholder="<spring:message code="user.lane"/>"
@@ -115,6 +141,7 @@
                         <option value="Việt Nam" selected="">Việt Nam</option>
                         <option value="UK">UK</option>
                     </select>
+                    <input type="hidden" value="${crTotalPrice}" id="ttprc">
                     <input type="submit" value="OK">
                 </form>
             </c:if>

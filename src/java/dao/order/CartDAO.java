@@ -6,9 +6,11 @@
 package dao.order;
 
 import dao.SingleDBConnection;
+import dao.book.DealsDAO;
 import entity.book.Book;
 import entity.book.BookSet;
 import entity.book.Category;
+import entity.book.Deals;
 import entity.order.BookOrder;
 import entity.order.Cart;
 import java.sql.Connection;
@@ -179,14 +181,19 @@ public class CartDAO {
         ResultSet rs2 = null;
         ArrayList<Cart> list = new ArrayList<>();
         try {
-            ps = conn.prepareStatement("SELECT tblCartSave.idCart FROM tblCartSave WHERE tblCartSave.idCustomerMember = ?;");
+            ps = conn.prepareStatement("SELECT DISTINCT "
+                    + "tblCartSave.idCart, tblCart.bonnusPoint "
+                    + "FROM tblCartSave JOIN tblCart ON "
+                    + "tblCartSave.idCart = tblCart.idCart "
+                    + "WHERE tblCartSave.idCustomerMember = ?;");
             ps.setInt(1, mbId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int idCart = rs.getInt(1);
+                int bonnusPoint = rs.getInt(2);
                 ArrayList<BookOrder> listBookOrder = new ArrayList<>();
                 float totalPrice = 0;
-                ps = conn.prepareStatement("SELECT "
+                ps = conn.prepareStatement("SELECT DISTINCT "
                         + "tblBookOrder.idBookOrder, "
                         + "tblBookOrder.quantity, "
                         + "tblBookOrder.totalPrice, "
@@ -229,12 +236,14 @@ public class CartDAO {
                         sortLink = MyTool.convertString(rs1.getString(17));
                         Category ct = new Category(rs1.getInt(11), rs1.getString(17), rs1.getString(18), sortLink);
                         sortLink = MyTool.convertString(rs1.getString(3));
-                        Book book = new Book(rs1.getInt(1), rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14));
+                        int idB = rs1.getInt(1);
+                        ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idB);
+                        Book book = new Book(idB, rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14), listDeals);
                         listBookOrder.add(new BookOrder(rs2.getInt(1), rs2.getInt(2), rs2.getFloat(3), book));
                         totalPrice += rs2.getFloat(3);
                     }
                 }
-                Cart cart = new Cart(idCart, listBookOrder, totalPrice);
+                Cart cart = new Cart(idCart, listBookOrder, bonnusPoint, totalPrice);
                 list.add(cart);
             }
             return list;
@@ -268,15 +277,20 @@ public class CartDAO {
         try {
             ArrayList<BookOrder> listBookOrder = new ArrayList<>();
             float totalPrice = 0;
-            ps = conn.prepareStatement("SELECT "
+            ps = conn.prepareStatement("SELECT DISTINCT "
                     + "tblBookOrder.idBookOrder, "
                     + "tblBookOrder.quantity, "
                     + "tblBookOrder.totalPrice, "
-                    + "tblBookOrder.idBook "
-                    + "FROM tblBookOrder WHERE tblBookOrder.idCart = ?;");
+                    + "tblBookOrder.idBook, "
+                    + "tblCart.bonnusPoint "
+                    + "FROM tblCart JOIN tblBookOrder "
+                    + "ON tblCart.idCart = tblBookOrder.idCart"
+                    + " WHERE tblBookOrder.idCart = ?;");
             ps.setInt(1, idCart);
             rs2 = ps.executeQuery();
+            int bonnusPoint = 0;
             while (rs2.next()) {
+                bonnusPoint = rs2.getInt(5);
                 int idBook = rs2.getInt(4);
                 ps = conn.prepareStatement("SELECT DISTINCT "
                         + "tblBook.idBook, "
@@ -311,13 +325,15 @@ public class CartDAO {
                     sortLink = MyTool.convertString(rs1.getString(17));
                     Category ct = new Category(rs1.getInt(11), rs1.getString(17), rs1.getString(18), sortLink);
                     sortLink = MyTool.convertString(rs1.getString(3));
-                    Book book = new Book(rs1.getInt(1), rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14));
+                    int idB = rs1.getInt(1);
+                    ArrayList<Deals> listDeals = new DealsDAO().getListDealsByBookId(idB);
+                    Book book = new Book(idB, rs1.getString(2), rs1.getString(3), rs1.getString(4), rs1.getString(5), rs1.getString(6), rs1.getString(7), rs1.getString(8), rs1.getString(9), rs1.getInt(10), ct, bs, sortLink, rs1.getInt(13), rs1.getFloat(14), listDeals);
                     listBookOrder.add(new BookOrder(rs2.getInt(1), rs2.getInt(2), rs2.getFloat(3), book));
                     totalPrice += rs2.getFloat(3);
                 }
             }
             if (listBookOrder != null && totalPrice != 0) {
-                Cart cart = new Cart(idCart, listBookOrder, totalPrice);
+                Cart cart = new Cart(idCart, listBookOrder, bonnusPoint, totalPrice);
                 return cart;
             }
         } catch (Exception e) {

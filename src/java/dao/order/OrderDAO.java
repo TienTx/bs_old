@@ -89,8 +89,7 @@ public class OrderDAO {
                             + "tblOrder.idPayment, "
                             + "tblOrder.createDate, "
                             + "tblOrder.state "
-                            + "FROM tblOrder WHERE tblOrder.idShippingInfor = ? "
-                            + "ORDER BY tblOrder.createDate DESC;");
+                            + "FROM tblOrder WHERE tblOrder.idShippingInfor = ?;");
                     ps.setInt(1, listShippingInfor.get(i).getIdShippingInfor());
                     rsOrder = ps.executeQuery();
                     if (rsOrder.next()) {

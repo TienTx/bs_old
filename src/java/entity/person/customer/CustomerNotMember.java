@@ -13,6 +13,13 @@ import java.io.Serializable;
  */
 public class CustomerNotMember extends Customer implements Serializable {
 
+    public CustomerNotMember() {
+    }
+
+    public CustomerNotMember(int idCustomer) {
+        super(idCustomer, null, null);
+    }
+
     @Override
     public String getCustomerType() {
         return "customerNotMember";

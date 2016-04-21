@@ -55,6 +55,11 @@
                         %>
                         <tr>
                             <td colspan="9">
+                                <p><spring:message code="cart.bonnuspoint"/>: ${listCart.bonnusPoint}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">
                                 <p><spring:message code="cart.totalprice"/>: ${listCart.totalPrice} VNĐ</p>
                             </td>
                         </tr>

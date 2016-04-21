@@ -6,7 +6,11 @@
 package entity.book;
 
 import java.io.Serializable;
+<<<<<<< HEAD
 import tool.MyTool;
+=======
+import java.util.ArrayList;
+>>>>>>> 8e68ce0065eebbd484aaa4115bba4754f3c1b032
 
 /**
  *
@@ -29,6 +33,7 @@ public class Book implements Serializable {
     private String sortLink;
     private int votes;
     private float ratePoint;
+    private ArrayList<Deals> listDeals;
 
     public Book() {
     }
@@ -93,6 +98,10 @@ public class Book implements Serializable {
         this.ratePoint = ratePoint;
     }
 
+    public void setListDeals(ArrayList<Deals> listDeals) {
+        this.listDeals = listDeals;
+    }
+
     public int getIdBook() {
         return idBook;
     }
@@ -153,7 +162,11 @@ public class Book implements Serializable {
         return ratePoint;
     }
 
-    public Book(String image, String title, String author, String publisher, String publishYear, String description, String originalPrice, String salePrice, int quantity, Category category, BookSet set, String sortLink, int votes, float ratePoint) {
+    public ArrayList<Deals> getListDeals() {
+        return listDeals;
+    }
+
+    public Book(String image, String title, String author, String publisher, String publishYear, String description, String originalPrice, String salePrice, int quantity, Category category, BookSet set, String sortLink, int votes, float ratePoint, ArrayList<Deals> listDeals) {
         this.image = image;
         this.title = title;
         this.author = author;
@@ -168,9 +181,10 @@ public class Book implements Serializable {
         this.sortLink = sortLink;
         this.votes = votes;
         this.ratePoint = ratePoint;
+        this.listDeals = listDeals;
     }
 
-    public Book(int idBook, String image, String title, String author, String publisher, String publishYear, String description, String originalPrice, String salePrice, int quantity, Category category, BookSet set, String sortLink, int votes, float ratePoint) {
+    public Book(int idBook, String image, String title, String author, String publisher, String publishYear, String description, String originalPrice, String salePrice, int quantity, Category category, BookSet set, String sortLink, int votes, float ratePoint, ArrayList<Deals> listDeals) {
         this.idBook = idBook;
         this.image = image;
         this.title = title;
@@ -186,6 +200,7 @@ public class Book implements Serializable {
         this.sortLink = sortLink;
         this.votes = votes;
         this.ratePoint = ratePoint;
+        this.listDeals = listDeals;
     }
     public Book convertBook(Object book){
         if(book instanceof NXBHaNoi.Book){

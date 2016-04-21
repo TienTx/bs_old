@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <spring:url value="/resources/image/thumb" var="image" />
+<spring:url value="/resources/image/icon" var="icon" />
 <%@include file="../template/header.jsp" %>
 <%@include file="inc/topHeader.jsp" %>
 <%@include file="inc/navigation.jsp" %>
@@ -44,6 +45,13 @@
                             <td>${currentBookOrder.author}</td>
                             <td>${currentBookOrder.originalPrice}</td>
                             <td>
+                                <c:if test="${currentBookOrder.salePrice != '-1'}">
+                                    <c:forEach items="${currentBookOrder.listDeals}" var="km">
+                                        <font color="red">
+                                        <spring:message code="book.discount"/> ${km.discount}%
+                                        </font>
+                                    </c:forEach>
+                                </c:if>
                                 <input type="text" value="${currentBookOrder.salePrice}" readonly="" disabled="">
                             </td>
                             <td class="quantity">
@@ -58,29 +66,47 @@
                             <td>${currentBookOrder.category.name}</td>
                             <td>${currentBookOrder.set.name}</td>
                             <td>
-                                <input type="text" value="${currentBookOrder.salePrice}" readonly="" disabled="">
+                                <input type="text" value="${currentBookOrder.salePrice}" readonly="" disabled="" id="ttprc">
                             </td>
                         </tr>
                     </table>
-                    <h2><spring:message code="user.addressshipping"/></h2>
-                    <input required="" type="text" name="number" placeholder="<spring:message code="user.housenumber"/>"
-                           pattern="\d{1,10}">
-                    <input required="" type="text" name="lane" placeholder="<spring:message code="user.lane"/>"
-                           pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{1,10}">
-                    <input required="" type="text" name="street" placeholder="<spring:message code="user.street"/>"
-                           pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
-                    <input required="" type="text" name="ward" placeholder="<spring:message code="user.ward"/>"
-                           pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
-                    <input required="" type="text" name="district" placeholder="<spring:message code="user.district"/>"
-                           pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
-                    <input required="" type="text" name="city" placeholder="<spring:message code="user.city"/>"
-                           pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
-                    <select name="country">
-                        <option value="Việt Nam" selected="">Việt Nam</option>
-                        <option value="UK">UK</option>
-                    </select>
-                    <input type="hidden" value="${customerMemberUsername}" id="crcusmbun">
-                    <input type="submit" value="OK">
+                    <ul>
+                        <li id="licp"><spring:message code="order.mcardpoint"/></li>
+                        <li id="lincp"><spring:message code="order.mncardpoint"/></li>
+                    </ul>
+                    <section id="cp">
+                        <label id="condition"><spring:message code="order.condition"/></label>
+                        <label for="code">Code: </label>
+                        <input style="text-transform: uppercase;"
+                               type="text" id="code" name="code" pattern="([A-Za-z0-9]){6,6}">
+                        <span id="right" class="hide">&nbsp;</span>
+                        <span id="wrong" class="hide">&nbsp;</span>
+                        <section id="codeif">
+                            <p><spring:message code="order.crpoint"/>&nbsp;<i id="crpoint">0</i>&nbsp;&nbsp;-&nbsp;<spring:message code="order.applypoint"/>&nbsp;<i id="applypoint">0</i></p>
+                            <small class="hide"><spring:message code="order.isnotcardpoint"/></small>
+                        </section>
+                    </section>
+                    <fieldset>
+                        <legend><spring:message code="user.addressshipping"/></legend>
+                        <input required="" type="text" name="number" placeholder="<spring:message code="user.housenumber"/>"
+                               pattern="\d{1,10}">
+                        <input required="" type="text" name="lane" placeholder="<spring:message code="user.lane"/>"
+                               pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{1,10}">
+                        <input required="" type="text" name="street" placeholder="<spring:message code="user.street"/>"
+                               pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
+                        <input required="" type="text" name="ward" placeholder="<spring:message code="user.ward"/>"
+                               pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
+                        <input required="" type="text" name="district" placeholder="<spring:message code="user.district"/>"
+                               pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
+                        <input required="" type="text" name="city" placeholder="<spring:message code="user.city"/>"
+                               pattern="[a-zA-Z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ ]{6,20}">
+                        <select name="country">
+                            <option value="Việt Nam" selected="">Việt Nam</option>
+                            <option value="UK">UK</option>
+                        </select>
+                        <input type="hidden" value="${customerMemberUsername}" id="crcusmbun">
+                        <input type="submit" value="OK">
+                    </fieldset>
                 </form>
             </c:if>
         </fieldset>

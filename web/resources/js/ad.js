@@ -177,7 +177,12 @@ $(document).ready(function () {
         $(this).parent().find("#editDeals").removeClass("hide");
         $(this).addClass("hide");
     });
-    $('.adNav').height($('.mnOrder').height());
+    var fsdataheight = $('.fsdata').height();
+    if (fsdataheight > 600) {
+        $('.rightaside').height(fsdataheight);
+    } else {
+        $('.rightaside').height(600);
+    }
 });
 
 // StaffManager

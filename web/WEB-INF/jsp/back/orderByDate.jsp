@@ -27,8 +27,8 @@
     </head>
     <body>
         <section class="adInside clearfix">
-            <fieldset class="adNav">
-                <legend> Quản lý Đơn hàng </legend>
+            <h1> Seller - Quản lý Đơn hàng </h1>
+            <aside class="rightaside">
                 <a href="<%=request.getContextPath()%>/seller/allorder.html">Tất cả Đơn hàng</a>
                 <form action="<%=request.getContextPath()%>/seller/order.html" method="get" id="filter" class="clearfix">
                     <select name="date">
@@ -52,13 +52,18 @@
                     </select>
                     <input type="submit" value="<spring:message code="filter.filter"/>">
                 </form>
-                <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
-                <button id="lobtn">Đăng xuất</button>
-            </fieldset>
-            <fieldset class="mnOrder">
+                <fieldset class="mninfor">
+                    <legend>Seller: <i>${seller}</i></legend>
+                    <a href="<%=request.getContextPath()%>/home.html">Trang chủ</a>
+                    <button id="lobtn">Đăng xuất</button>
+                </fieldset>
+            </aside>
+            <fieldset class="fsdata">
                 <legend>Danh sách Đơn hàng</legend>
                 <h2>
-                    <c:if test="${empty orderByDate}"><spring:message code="order.saveempty"/></c:if>
+                    <c:if test="${empty orderByDate}">
+                        <spring:message code="order.saveempty"/>
+                    </c:if>
                 </h2>
                 <c:if test="${!empty orderByDate}">
                     <pg:paging pageSize="3">
@@ -169,6 +174,7 @@
                 </c:if>
             </fieldset>
         </section>
+        <footer class="adInside clearfix adfooter">MyBookStore by tientx</footer>
         <script type="text/javascript" src="${jquery}"></script>
         <script type="text/javascript" src="${adscript}"></script>
         <script type="text/javascript" src="${html5}"></script>

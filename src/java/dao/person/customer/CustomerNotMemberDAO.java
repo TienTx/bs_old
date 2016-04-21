@@ -32,8 +32,8 @@ public class CustomerNotMemberDAO extends CustomerDAO {
     }
 
     @Override
-    public boolean addCustomerMember(Customer cus) {
-        return false;
+    public int addCustomerMember(Customer cus) {
+        return -1;
     }
 
     @Override

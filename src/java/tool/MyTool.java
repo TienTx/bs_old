@@ -23,8 +23,9 @@ import javax.servlet.http.HttpSession;
  */
 public class MyTool {
 
+    static final String STR = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 //    static final String STR = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    static final String STR = "0123456789";
+//    static final String STR = "0123456789";
 
     public static String randomString(int len) {
         Random rnd = new Random();

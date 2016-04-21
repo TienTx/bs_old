@@ -210,15 +210,62 @@ $(document).ready(function () {
     $('.userOption #login').click(function () {
         $('#mirrorbg').removeClass("hide");
         $('#mirrorbg').addClass("showlogin");
+        $('#atfc').focus();
     });
     $('#lgnow').click(function () {
         $('#mirrorbg').removeClass("hide");
         $('#mirrorbg').addClass("showlogin");
+        $('#atfc').focus();
     });
     $('#clostlogin').click(function () {
         $('#mirrorbg').removeClass("showlogin");
         $('#mirrorbg').addClass("hide");
         return false;
+    });
+    $('#licp').hover(function () {
+        $(this).css("box-shadow", "inset 0px 2px 0px rgba(0,0,0,0.65)");
+        $('#lincp').css("box-shadow", "inset 0px 0px 2px rgba(0,0,0,0.35)");
+        $('#ncp').hide();
+        $('#cp').show();
+        $('#code').attr("required", "required");
+        $('#cpemail1').attr("required", "required");
+        $('#cpphone1').attr("required", "required");
+        $('#cpemail2').removeAttr("required");
+        $('#cpphone2').removeAttr("required");
+        if ($('#ttprc').val() >= 100000) {
+            $('#condition').attr("class", "hide");
+//            $('#code').removeAttr("disabled");
+//            $('.code').removeAttr("disabled");
+        } else {
+            $('#condition').removeClass("hide");
+//            $('#code').attr("disabled", "disabled");
+//            $('.code').attr("disabled", "disabled");
+        }
+    });
+    $('#lincp').hover(function () {
+        $(this).css("box-shadow", "inset 0px 2px 0px rgba(0,0,0,0.65)");
+        $('#licp').css("box-shadow", "inset 0px 0px 2px rgba(0,0,0,0.35)");
+        $('#cp').hide();
+        $('#ncp').show();
+        $('#code').removeAttr("required");
+        $('#cpemail2').attr("required", "required");
+        $('#cpphone2').attr("required", "required");
+        $('#cpemail1').removeAttr("required");
+        $('#cpphone1').removeAttr("required");
+    });
+    $('#licp2').hover(function () {
+        $(this).css("box-shadow", "inset 0px 2px 0px rgba(0,0,0,0.65)");
+        $('#lincp2').css("box-shadow", "inset 0px 0px 2px rgba(0,0,0,0.35)");
+        $('#ncp').hide();
+        $('#cp').show();
+        $('#code').attr("required", "required");
+    });
+    $('#lincp2').hover(function () {
+        $(this).css("box-shadow", "inset 0px 2px 0px rgba(0,0,0,0.65)");
+        $('#licp2').css("box-shadow", "inset 0px 0px 2px rgba(0,0,0,0.35)");
+        $('#cp').hide();
+        $('#ncp').show();
+        $('#code').removeAttr("required");
     });
 });
 //login
@@ -255,6 +302,32 @@ $(document).ready(function () {
         e.preventDefault();
     });
 });
+
+//sign up
+$(document).ready(function () {
+    $("#signupFrm").submit(function (e) {
+        $.ajax({
+            type: "POST",
+            url: contextPath + "/user/signup.html",
+            header: {
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            data: $("#signupFrm").serialize(),
+            success: function (response) {
+                if (response !== null && response !== "fail") {
+                    $('#registed').css("display", "flex");
+                    $('#cpif').html("Code: " + response.split("#")[0] + " - Points: " + response.split("#")[1]);
+                    $('.content fieldset').replaceWith("");
+                } else {
+                    $('#signuperror').removeClass("hide");
+                }
+            }
+        });
+        e.preventDefault();
+    });
+});
+
 //log out
 $(document).ready(function () {
     $("#logout").click(function () {
@@ -298,7 +371,7 @@ $(document).ready(function () {
         infinite: true,
         speed: 500,
         fade: true,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 5000,
         cssEase: 'linear'
     });
@@ -485,6 +558,13 @@ $(document).ready(function () {
         }
         $('.ttPr input').val(parseFloat(nTtPr));
         strCart += pr = target.parent().parent().find("td").eq(5).find("input").val() + "@" + target.val() + "#";
+        if ($('#ttprc').val() >= 100000) {
+            $('#condition').attr("class", "hide");
+            $('#code').removeAttr("disabled");
+        } else {
+            $('#condition').removeClass("hide");
+            $('#code').attr("disabled", "disabled");
+        }
     });
 });
 //update cart
@@ -552,6 +632,25 @@ $(document).ready(function () {
         });
         e.preventDefault();
     });
+
+    $(".mbcartOrder").click(function (e) {
+        $.ajax({
+            type: "POST",
+            url: contextPath + "/member/membercartorder",
+            header: {
+                Accept: "application/json; charset=utf-8",
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            success: function (response) {
+                if (response !== null && response !== "cancelOrder") {
+                    $(location).attr("href", contextPath + "/member/" + response + "/addressshipping.html");
+                } else {
+                    $('#fscartsv #ordererror').removeClass("hide");
+                }
+            }
+        });
+        e.preventDefault();
+    });
 });
 //member delete cart saved
 $(document).ready(function () {
@@ -606,11 +705,10 @@ $(document).ready(function () {
                 if (response !== null && response === "OK") {
                     $(location).attr("href", contextPath + "/member/" + crmb + "/ordersaved.html");
                 } else {
-                    $('#ordererror h2').removeClass("hide");
+                    $('#ordererror').removeClass("hide");
                 }
             }
         });
-
         e.preventDefault();
     });
 });
@@ -620,6 +718,8 @@ $(document).ready(function () {
         $('#odcart').slideDown(500);
 //        $('#odcart').removeClass("hide");
     });
+    $('#code').val("");
+    $('.code').val("");
 
     $("#odcart").submit(function (e) {
         $.ajax({
@@ -631,10 +731,11 @@ $(document).ready(function () {
             },
             data: $("#odcart").serialize(),
             success: function (response) {
-                if (response !== null && response === "OK") {
+                if (response !== null && response !== "fail") {
+                    alert("Code : " + response.split("#")[0] + "\nPoints : " + response.split("#")[1]);
                     $(location).attr("href", contextPath + "/ordersuccessful.html");
                 } else {
-                    $('#ordererror h2').removeClass("hide");
+                    $('#ordererror').removeClass("hide");
                 }
             }
         });
@@ -652,14 +753,103 @@ $(document).ready(function () {
             },
             data: $("#bodbcs").serialize(),
             success: function (response) {
-                if (response !== null && response === "OK") {
+                if (response !== null && response !== "fail") {
+                    alert("Code : " + response.split("#")[0] + "\nPoints : " + response.split("#")[1]);
                     $(location).attr("href", contextPath + "/ordersuccessful.html");
                 } else {
-                    $('#ordererror h2').removeClass("hide");
+                    $('#ordererror').removeClass("hide");
                 }
             }
         });
 
         e.preventDefault();
+    });
+
+    //check member card points
+    $('#code').change(function (e) {
+        var vl = $(this).val().trim();
+        var mbun = $('#crcusmbun').val();
+        var ttprc = $('#ttprc').val();
+        if (ttprc >= 100000 && vl.length >= 6) {
+            $.ajax({
+                type: "POST",
+                url: contextPath + "/member/" + mbun + "/checkcardpoint",
+                header: {
+                    Accept: "application/json; charset=utf-8",
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                data: "code=" + vl + "&ttprc=" + ttprc,
+                success: function (response) {
+                    if (response !== null && response !== "fail") {
+                        $('#right').removeClass("hide");
+                        $('#codeif small').attr("class", "hide");
+                        $('#wrong').attr("class", "hide");
+                        $('#crpoint').html(response.split("#")[0]);
+                        $('#applypoint').html(response.split("#")[1]);
+                    } else {
+                        $('#right').attr("class", "hide");
+                        $('#wrong').removeClass("hide");
+                        $('#codeif small').removeClass("hide");
+                        $('#crpoint').html("0");
+                        $('#applypoint').html("0");
+                    }
+                }
+            });
+            e.preventDefault();
+        } else {
+            $('#codeif small').attr("class", "hide");
+            $('#crpoint').html("0");
+            $('#applypoint').html("0");
+        }
+    });
+
+
+    //check customer card points
+    $('.code').change(function (e) {
+        var vl = $(this).val().trim();
+        var ttprc = $('#ttprc').val();
+        if (ttprc >= 100000 && vl.length >= 6) {
+            $.ajax({
+                type: "POST",
+                url: contextPath + "/checkcode",
+                header: {
+                    Accept: "application/json; charset=utf-8",
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                data: "code=" + vl + "&ttprc=" + ttprc,
+                success: function (response) {
+                    if (response !== null && response !== "fail") {
+                        $('#right').removeClass("hide");
+                        $('#codeif small').attr("class", "hide");
+                        $('#wrong').attr("class", "hide");
+                        $('#crpoint').html(response.split("#")[0]);
+                        $('#applypoint').html(response.split("#")[1]);
+                        $('#cpemail1').val(response.split("#")[2]);
+                        $('#cpphone1').val(response.split("#")[3]);
+                        $('#cpemail1').removeClass("hide");
+                        $('#cpphone1').removeClass("hide");
+                    } else {
+                        $('#right').attr("class", "hide");
+                        $('#wrong').removeClass("hide");
+                        $('#codeif small').removeClass("hide");
+                        $('#crpoint').html("0");
+                        $('#applypoint').html("0");
+                        $('#cpemail1').val("");
+                        $('#cpphone1').val("");
+                        $('#cpemail1').attr("class", "hide");
+                        $('#cpphone1').attr("class", "hide");
+                    }
+                }
+            });
+            e.preventDefault();
+        } else {
+            $('#codeif small').attr("class", "hide");
+            $('#crpoint').html("0");
+            $('#applypoint').html("0");
+            $('#cpemail1').attr("class", "hide");
+            $('#cpphone1').attr("class", "hide");
+            $('#cpemail1').val("");
+            $('#cpphone1').val("");
+        }
     });
 });

@@ -61,9 +61,26 @@ public class PaymentDAO {
                                 ps = conn.prepareStatement("SELECT LAST_INSERT_ID()");
                                 rs2 = ps.executeQuery();
                                 if (rs2.next()) {
-                                    return new Payment(rs2.getInt(1), cart, bank);
+                                    int idPayment = rs2.getInt(1);
+                                    ps = conn.prepareStatement("UPDATE tblCart SET tblCart.bonnusPoint = ?"
+                                            + " WHERE tblCart.idCart = ?;");
+                                    ps.setInt(1, cart.getBonnusPoint());
+                                    ps.setInt(2, cart.getIdCart());
+                                    num = ps.executeUpdate();
+                                    if (num == 1) {
+                                        return new Payment(idPayment, cart, bank);
+                                    } else {
+                                        ps = conn.prepareStatement("DELETE FROM tblPayment WHERE tblPayment.idPayment = ?;");
+                                        ps.setInt(1, idPayment);
+                                    }
                                 }
+                            } else {
+                                ps = conn.prepareStatement("DELETE FROM tblKcoinBank WHERE tblKcoinBank.idKcoindBank = ?;");
+                                ps.setInt(1, rs1.getInt(1));
                             }
+                        } else {
+                            ps = conn.prepareStatement("DELETE FROM tblBank WHERE tblBank.idBank = ?;");
+                            ps.setInt(1, idBank);
                         }
                     }
                 }

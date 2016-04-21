@@ -57,6 +57,11 @@
                                     </c:forEach>
                                     <tr>
                                         <td colspan="9">
+                                            <p><spring:message code="cart.bonnuspoint"/>: ${listOrder.payment.cart.bonnusPoint}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="9">
                                             <p><spring:message code="cart.totalprice"/>: ${listOrder.payment.cart.totalPrice} VNĐ</p>
                                         </td>
                                     </tr>

@@ -62,7 +62,7 @@
                     <form id="lgFrm" action="" method="post">
                         <img id="clostlogin" src="${icon}/close1.png" title="close">
                         <h2 class="hide"><spring:message code="user.loginerror"/></h2>
-                        <input name="username" autofocus="" type="text" required="" pattern="[a-zA-Z0-9_]{6,30}" placeholder="<spring:message code="user.username"/>">
+                        <input id="atfc" name="username" type="text" required="" pattern="[a-zA-Z0-9_]{6,30}" placeholder="<spring:message code="user.username"/>">
                         <input name="password" type="password" required="" pattern=".{6,30}" placeholder="<spring:message code="user.password"/>">
                         <%
                         String crQr = request.getQueryString();
